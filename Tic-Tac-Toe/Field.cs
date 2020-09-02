@@ -21,7 +21,7 @@ namespace Tic_Tac_Toe
 
         private Piece CreatePiece()
         {
-            return new Piece();
+            return new Piece(this.Position, value:Game.CurrentPlayer.Value);
         }
     }
 }

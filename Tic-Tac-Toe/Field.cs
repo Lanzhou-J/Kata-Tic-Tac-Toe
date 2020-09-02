@@ -4,13 +4,19 @@ namespace Tic_Tac_Toe
 {
     public class Field
     {
-        private Boolean HasPiece { get; set; }
-        private Coord Position { get; set; }
+        public Boolean HasPiece { get; set; }
+        public Coord Position { get; set; }
         private Piece Piece { get; set; }
 
         public Field()
         {
             HasPiece = false;
+        }
+        
+        public Field(Coord position)
+        {
+            HasPiece = false;
+            Position = position;
         }
 
         public Field AcceptMove()

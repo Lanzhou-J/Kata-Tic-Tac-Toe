@@ -2,11 +2,13 @@ namespace Tic_Tac_Toe
 {
     public class Player
     {
-        public Piece.PieceValue Value { get; set; }
+        public CellValue CellValue { get; set; }
+        public string Name { get; set; }
 
-        public Player()
+        public Player(CellValue cellValue, string name)
         {
-            
+            CellValue = cellValue;
+            Name = name;
         }
     }
 }

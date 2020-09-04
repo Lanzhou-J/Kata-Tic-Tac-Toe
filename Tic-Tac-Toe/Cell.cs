@@ -4,30 +4,40 @@ namespace Tic_Tac_Toe
 {
     public class Cell
     {
-        public Boolean HasPiece { get; set; }
         public Coord Position { get; set; }
-        private Piece Piece { get; set; }
+        public CellValue Value { get; set; }
 
         public Cell()
         {
-            HasPiece = false;
+            Value = CellValue.Empty;
         }
         
         public Cell(Coord position)
         {
-            HasPiece = false;
             Position = position;
+            Value = CellValue.Empty;
         }
 
-        public Cell AcceptMove()
+        public Cell (Coord position, CellValue cellValue)
         {
-            this.HasPiece = true;
-            return this;
+            Position = position;
+            Value = cellValue;
         }
 
-        private Piece CreatePiece()
+        public string DisplayCellValue()
         {
-            return new Piece(this.Position, value:Game.CurrentPlayer.Value);
+            if (Value == CellValue.X)
+            {
+                return "X";
+            }else if (Value == CellValue.O)
+            {
+                return "O";
+            }
+            else
+            {
+                return ".";
+            }
         }
+
     }
 }

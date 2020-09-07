@@ -23,7 +23,7 @@ namespace Tic_Tac_Toe
             // boardOutput = new BoardOutput(updatedBoard);
             // boardOutput.Print();
             Game newGame = new Game();
-            newGame.StartGame();
+            newGame.Start();
             
         }
     }

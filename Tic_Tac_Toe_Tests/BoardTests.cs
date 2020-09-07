@@ -6,6 +6,9 @@ namespace Tic_Tac_Toe_Tests
     public class BoardTests
     {
         
+        // Add comments -> test planning
+        // user input 1,3, -> update Board
+        
         [Theory]
         [InlineData(3)]
         [InlineData(4)]

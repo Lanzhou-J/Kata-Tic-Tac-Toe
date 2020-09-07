@@ -15,11 +15,13 @@ namespace Tic_Tac_Toe
         static void Main(string[] args)
         {
             Board newBoard = new Board(3);
-            foreach (var cell in newBoard.Cells)
-            {
-                var position = cell.Position;
-                Console.WriteLine("({0},{1},{2})",position.RowValueX, position.ColumnValueY, cell.Value);
-            }
+            // foreach (var cell in newBoard.Cells)
+            // {
+            //     var position = cell.Position;
+                // Console.WriteLine("({0},{1},{2})",position.RowValueX, position.ColumnValueY, cell.Value);
+            // }
+            var boardOutput = new BoardOutput(newBoard);
+            boardOutput.Print();
             
         }
     }

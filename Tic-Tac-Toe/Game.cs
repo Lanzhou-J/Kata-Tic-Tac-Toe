@@ -23,26 +23,7 @@ namespace Tic_Tac_Toe
             Console.WriteLine("Here's the current board:");
             BoardOutput newBoardOutput = new BoardOutput(GameBoard);
             newBoardOutput.Print();
-            int turn = 1;
-            while (turn < 9)  
-            {
-                if (turn % 2 == 0)
-                {
-                    CurrentPlayer = Player2;
-                }
-                else
-                {
-                    CurrentPlayer = Player1;
-                }
-
-                PlayerInput newInput = new PlayerInput();
-                string playerInput = newInput.CollectPlayerInput(CurrentPlayer.Name, CurrentPlayer.CellValue.ToString());
-                Board updatedBoard = SortInput(playerInput);
-                newBoardOutput = new BoardOutput(updatedBoard);
-                newBoardOutput.Print();
-                turn++;
-            }
- 
+            TakeTurns();
         }
 
         private dynamic SortInput(string playerInput)
@@ -80,6 +61,29 @@ namespace Tic_Tac_Toe
             int coordY = (int) (yValue - '0');
             Coord newCoord = new Coord(coordX, coordY);
             return newCoord;
+        }
+
+        private void TakeTurns()
+        {
+            int turn = 1;
+            while (turn < 9)  
+            {
+                if (turn % 2 == 0)
+                {
+                    CurrentPlayer = Player2;
+                }
+                else
+                {
+                    CurrentPlayer = Player1;
+                }
+
+                PlayerInput newInput = new PlayerInput();
+                string playerInput = newInput.CollectPlayerInput(CurrentPlayer.Name, CurrentPlayer.CellValue.ToString());
+                Board updatedBoard = SortInput(playerInput);
+                BoardOutput newBoardOutput = new BoardOutput(updatedBoard);
+                newBoardOutput.Print();
+                turn++;
+            }
         }
 
     }

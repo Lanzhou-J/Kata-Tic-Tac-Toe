@@ -26,8 +26,19 @@ namespace Tic_Tac_Toe
         public Board UpdateBoard(Coord coord, CellValue cellValue)
         {
             int index = this.Size * (coord.RowValueX - 1) + (coord.ColumnValueY - 1);
-            this.Cells[index].Value = cellValue;
-            return this;
+            if (this.Cells[index].Value == CellValue.Empty)
+            {
+                this.Cells[index].Value = cellValue;
+                return this;
+            }
+            else
+            {
+                Console.WriteLine("Oh no, a piece is already at this place! Try again...");
+                return null;
+            }
+
+
+
         }
     }
 }

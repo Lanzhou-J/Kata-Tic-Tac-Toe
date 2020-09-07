@@ -5,9 +5,9 @@ namespace Tic_Tac_Toe
     public class Game
     {
         private Player CurrentPlayer { get; set; }
-        public Player Player1 { get; set; }
-        public Player Player2 { get; set; }
-        public Board GameBoard { get; private set; }
+        private Player Player1 { get; set; }
+        private Player Player2 { get; set; }
+        private Board GameBoard { get; set; }
 
         public Game()
         {
@@ -25,7 +25,37 @@ namespace Tic_Tac_Toe
             newBoardOutput.Print();
             TakeTurns();
         }
-
+        
+        private void TakeTurns()
+        {
+            Board previousBoard = GameBoard;
+            int turn = 1;
+            while (turn < 9)  
+            {
+                if (turn % 2 == 0)
+                {
+                    CurrentPlayer = Player2;
+                }
+                else
+                {
+                    CurrentPlayer = Player1;
+                }
+                PlayerInput newInput = new PlayerInput();
+                string playerInput = newInput.CollectPlayerInput(CurrentPlayer.Name, CurrentPlayer.CellValue.ToString());
+                Board updatedBoard = SortInput(playerInput);
+                if (updatedBoard != null)
+                {
+                    turn++;
+                }
+                else
+                {
+                    updatedBoard = previousBoard;
+                }
+                BoardOutput newBoardOutput = new BoardOutput(updatedBoard);
+                newBoardOutput.Print();
+                previousBoard = updatedBoard;
+            }
+        }
         private dynamic SortInput(string playerInput)
         {
             string pattern = @"^[1-3],[1-3]$";
@@ -63,28 +93,7 @@ namespace Tic_Tac_Toe
             return newCoord;
         }
 
-        private void TakeTurns()
-        {
-            int turn = 1;
-            while (turn < 9)  
-            {
-                if (turn % 2 == 0)
-                {
-                    CurrentPlayer = Player2;
-                }
-                else
-                {
-                    CurrentPlayer = Player1;
-                }
 
-                PlayerInput newInput = new PlayerInput();
-                string playerInput = newInput.CollectPlayerInput(CurrentPlayer.Name, CurrentPlayer.CellValue.ToString());
-                Board updatedBoard = SortInput(playerInput);
-                BoardOutput newBoardOutput = new BoardOutput(updatedBoard);
-                newBoardOutput.Print();
-                turn++;
-            }
-        }
 
     }
 }

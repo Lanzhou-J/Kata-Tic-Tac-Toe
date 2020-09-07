@@ -23,5 +23,11 @@ namespace Tic_Tac_Toe
             }
         }
 
+        public Board UpdateBoard(Coord coord, CellValue cellValue)
+        {
+            int index = this.Size * (coord.RowValueX - 1) + (coord.ColumnValueY - 1);
+            this.Cells[index].Value = cellValue;
+            return this;
+        }
     }
 }

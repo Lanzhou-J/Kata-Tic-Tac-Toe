@@ -68,5 +68,17 @@ namespace Tic_Tac_Toe_Tests
             
             Assert.Equal(rowValue,newBoard.Cells[index].Position.RowValueX );
         }
+        
+        [Fact]
+        public void UpdateBoard_WhenInputIsXAndValidCoord_ShouldUpdateBoard()
+        {
+            int boardSize = 3;
+            Board newBoard = new Board(boardSize);
+            Coord newCoord = new Coord(3,1);
+            Board updatedBoard = newBoard.UpdateBoard(newCoord, CellValue.X);
+            string updatedCellValue = updatedBoard
+                .Cells[boardSize * (newCoord.RowValueX - 1) + (newCoord.ColumnValueY - 1)].DisplayCellValue();
+            Assert.Equal("X", updatedCellValue);
+        }
     }
 }

@@ -16,9 +16,12 @@ namespace Tic_Tac_Toe
             int boardArea = Board.Size * Board.Size;
             for (int i = 1; i <= Board.Size; i++)
             {
+                int row = Board.Size * (i - 1);
                 for (int j = 1; j <= Board.Size; j++)
                 {
-                    Console.Write(Board.Cells[i*j-1].DisplayCellValue());
+                    int index = row + (j - 1);
+                    // Console.Write(index);
+                    Console.Write(Board.Cells[index].DisplayCellValue());
                     Console.Write(" "); 
                 }
                 Console.WriteLine("");

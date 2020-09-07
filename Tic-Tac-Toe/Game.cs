@@ -19,18 +19,23 @@ namespace Tic_Tac_Toe
 
         public void Start()
         {
-            Console.WriteLine("Welcome to Tic Tac Toe!");
-            Console.WriteLine("Here's the current board:");
+            WelcomePlayer();
             BoardOutput newBoardOutput = new BoardOutput(GameBoard);
             newBoardOutput.Print();
             TakeTurns();
         }
-        
+
+        private void WelcomePlayer()
+        {
+            Console.WriteLine("Welcome to Tic Tac Toe!");
+            Console.WriteLine("Here's the current board:");  
+        }
+
         private void TakeTurns()
         {
             Board previousBoard = GameBoard;
             int turn = 1;
-            while (turn < 9)  
+            while (turn <= GameBoard.Size*GameBoard.Size)  
             {
                 if (turn % 2 == 0)
                 {

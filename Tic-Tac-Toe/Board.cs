@@ -5,33 +5,40 @@ namespace Tic_Tac_Toe
 {
     public class Board
     {
-        public static int Size { get; set; }
-        public List<Field> FieldList { get; set; }
+        public int Size { get; set; }
+        public List<Cell> Cells { get; set; }
 
-        public Board()
+        public Board(int size)
         {
-            Size = 3;
-            FieldList = new List<Field>();
-        }
-
-        public Board(List<Field> fieldList)
-        {
-            FieldList = fieldList;
-            Size = 3;
-        }
-
-        public Board CreateBoard()
-        {
+            Size = size;
+            Cells = new List<Cell>();
             for (int row = 1; row <= Size; row++)
             {
                 for (int col = 1; col <= Size; col++)
                 {
                     Coord newCoord = new Coord(row, col);
-                    Field newField = new Field(newCoord);
-                    this.FieldList.Add(newField);                    
+                    Cell newCell = new Cell(newCoord);
+                    this.Cells.Add(newCell);                    
                 }
             }
-            return new Board(FieldList);
+        }
+
+        public Board UpdateBoard(Coord coord, CellValue cellValue)
+        {
+            int index = this.Size * (coord.RowValueX - 1) + (coord.ColumnValueY - 1);
+            if (this.Cells[index].Value == CellValue.Empty)
+            {
+                this.Cells[index].Value = cellValue;
+                return this;
+            }
+            else
+            {
+                Console.WriteLine("Oh no, a piece is already at this place! Try again...");
+                return null;
+            }
+
+
+
         }
     }
 }

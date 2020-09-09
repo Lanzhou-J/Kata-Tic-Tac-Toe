@@ -16,7 +16,8 @@ namespace Tic_Tac_Toe
             Player2 = new Player(CellValue.O, "Player 2");
             CurrentPlayer = Player1;
         }
-
+        // move BoardOutput to Program.cs
+        // and use boardoutput as an argument in Start method (IPrintBoard xxx)
         public void Start()
         {
             WelcomePlayer();
@@ -48,6 +49,7 @@ namespace Tic_Tac_Toe
                 PlayerInput newInput = new PlayerInput();
                 string playerInput = newInput.CollectPlayerInput(CurrentPlayer.Name, CurrentPlayer.CellValue.ToString());
                 Board updatedBoard = SortInput(playerInput);
+                // Compare objects;
                 if (updatedBoard != null)
                 {
                     turn++;
@@ -58,11 +60,17 @@ namespace Tic_Tac_Toe
                 }
                 BoardOutput newBoardOutput = new BoardOutput(updatedBoard);
                 newBoardOutput.Print();
+                if (Rule.DetermineWin(updatedBoard, CurrentPlayer.CellValue))
+                {
+                    Console.WriteLine($"The winner is {CurrentPlayer.Name}");
+                    Environment.Exit(1);
+                }
                 previousBoard = updatedBoard;
             }
         }
-        private dynamic SortInput(string playerInput)
+        private Board SortInput(string playerInput)
         {
+            // maybe use Board.Size instead of 3 here (string interpolation)
             string pattern = @"^[1-3],[1-3]$";
             if (playerInput == "q")
             {

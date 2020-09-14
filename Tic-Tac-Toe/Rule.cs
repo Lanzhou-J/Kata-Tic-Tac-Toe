@@ -11,10 +11,14 @@ namespace Tic_Tac_Toe
         public static Boolean DetermineWin(Board gameBoard, CellValue cellValue)
         {
             List<Cell> sameValueCells = gameBoard.Cells.FindAll(x => x.Value.Equals(cellValue));
-            if (CheckRow(gameBoard, sameValueCells))
+            if (CheckRow(sameValueCells))
             {
                 return true;
-            }else if(CheckColumn(gameBoard,sameValueCells))
+            }else if(CheckColumn(sameValueCells))
+            {
+                return true;
+            }
+            else if(CheckDiagonal(sameValueCells))
             {
                 return true;
             }
@@ -24,7 +28,7 @@ namespace Tic_Tac_Toe
             }
         }
 
-        private static Boolean CheckRow(Board gameBoard, List<Cell> cells)
+        private static Boolean CheckRow(List<Cell> cells)
         {
             List<int> rowValueXs = new List<int>();
             foreach (var cell in cells)
@@ -37,7 +41,7 @@ namespace Tic_Tac_Toe
             return count == winCount;
         }
         
-        private static Boolean CheckColumn(Board gameBoard, List<Cell> cells)
+        private static Boolean CheckColumn(List<Cell> cells)
         {
             List<int> columnValueYs = new List<int>();
             foreach (var cell in cells)
@@ -50,12 +54,31 @@ namespace Tic_Tac_Toe
             return count == winCount;
         }
 
-        private static Boolean CheckDiagonal()
+        private static Boolean CheckDiagonal(List<Cell> cells)
         {
-            //Sort cell items in sameValueCells based on RowValueX.
-            //select cell items in sameValueCells that are both:
-                //1. X value 
-            return false;
+            var topLeftToBottomRightCount = 0;
+            var bottomLeftToTopRightCount = 0;
+            foreach (var cell in cells)
+            {
+                if (cell.Position.ColumnValueY == cell.Position.RowValueX)
+                {
+                    topLeftToBottomRightCount++;
+                }
+                if (cell.Position.ColumnValueY + cell.Position.RowValueX == 4)
+                {
+                    bottomLeftToTopRightCount++;
+                }
+
+            }
+
+            if (topLeftToBottomRightCount == 3 || bottomLeftToTopRightCount==3)
+            {
+                return true;
+            }
+            else
+            {
+                return false; 
+            }
         }
     }
 }

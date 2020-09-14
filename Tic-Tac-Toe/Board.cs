@@ -36,9 +36,6 @@ namespace Tic_Tac_Toe
                 Console.WriteLine("Oh no, a piece is already at this place! Try again...");
                 return null;
             }
-
-
-
         }
     }
 }

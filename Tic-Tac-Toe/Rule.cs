@@ -10,10 +10,11 @@ namespace Tic_Tac_Toe
         
         public static Boolean DetermineWin(Board gameBoard, CellValue cellValue)
         {
-            if (CheckRow(gameBoard, cellValue))
+            List<Cell> sameValueCells = gameBoard.Cells.FindAll(x => x.Value.Equals(cellValue));
+            if (CheckRow(gameBoard, sameValueCells))
             {
                 return true;
-            }else if(CheckColumn(gameBoard,cellValue))
+            }else if(CheckColumn(gameBoard,sameValueCells))
             {
                 return true;
             }
@@ -23,12 +24,10 @@ namespace Tic_Tac_Toe
             }
         }
 
-        private static Boolean CheckRow(Board gameBoard, CellValue cellValue)
+        private static Boolean CheckRow(Board gameBoard, List<Cell> cells)
         {
-            List<Cell> parts = gameBoard.Cells.FindAll(x => x.Value.Equals(cellValue));
-
             List<int> rowValueXs = new List<int>();
-            foreach (var cell in parts)
+            foreach (var cell in cells)
             {
                 rowValueXs.Add(cell.Position.RowValueX);
             }
@@ -38,12 +37,10 @@ namespace Tic_Tac_Toe
             return count == winCount;
         }
         
-        private static Boolean CheckColumn(Board gameBoard, CellValue cellValue)
+        private static Boolean CheckColumn(Board gameBoard, List<Cell> cells)
         {
-            List<Cell> parts = gameBoard.Cells.FindAll(x => x.Value.Equals(cellValue));
-
             List<int> columnValueYs = new List<int>();
-            foreach (var cell in parts)
+            foreach (var cell in cells)
             {
                 columnValueYs.Add(cell.Position.ColumnValueY);
             }
@@ -51,6 +48,14 @@ namespace Tic_Tac_Toe
             int winCount = 3;
             var count = columnValueYs.GroupBy(item => item).Where(item => item.Count() >= winCount).Sum(item=> item.Count());
             return count == winCount;
+        }
+
+        private static Boolean CheckDiagonal()
+        {
+            //Sort cell items in sameValueCells based on RowValueX.
+            //select cell items in sameValueCells that are both:
+                //1. X value 
+            return false;
         }
     }
 }

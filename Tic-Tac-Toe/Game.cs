@@ -46,8 +46,8 @@ namespace Tic_Tac_Toe
                 {
                     CurrentPlayer = Player1;
                 }
-                PlayerInput newInput = new PlayerInput();
-                string playerInput = newInput.CollectPlayerInput(CurrentPlayer.Name, CurrentPlayer.CellValue.ToString());
+                
+                string playerInput = CurrentPlayer.CollectPlayerInput();
                 Board updatedBoard = SortInput(playerInput);
                 // Compare objects;
                 if (updatedBoard != null)
@@ -70,8 +70,8 @@ namespace Tic_Tac_Toe
         }
         private Board SortInput(string playerInput)
         {
-            // maybe use Board.Size instead of 3 here (string interpolation)
-            string pattern = @"^[1-3],[1-3]$";
+            
+            string pattern = $@"^[1-{GameBoard.Size}],[1-{GameBoard.Size}]$";
             if (playerInput == "q")
             {
                 QuitGame(CurrentPlayer.Name);

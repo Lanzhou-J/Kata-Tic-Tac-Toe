@@ -11,18 +11,10 @@ namespace Tic_Tac_Toe
         public static Boolean DetermineWin(Board gameBoard, CellValue cellValue)
         {
             List<Cell> sameValueCells = gameBoard.Cells.FindAll(x => x.Value.Equals(cellValue));
-            if (CheckRow(sameValueCells))
+            if (CheckRow(sameValueCells)||CheckColumn(sameValueCells)||CheckDiagonal(sameValueCells))
             {
                 return true;
-            }else if(CheckColumn(sameValueCells))
-            {
-                return true;
-            }
-            else if(CheckDiagonal(sameValueCells))
-            {
-                return true;
-            }
-            else
+            }else
             {
                 return false;
             }

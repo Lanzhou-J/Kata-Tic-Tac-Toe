@@ -112,7 +112,5 @@ namespace Tic_Tac_Toe_Tests
             
             Assert.False(result);
         }
-
-
     }
 }

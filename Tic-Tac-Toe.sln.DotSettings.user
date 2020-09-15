@@ -11,6 +11,7 @@
     &lt;TestId&gt;xUnit::90FC31DE-2241-48B1-8949-27553CE4CE1E::.NETCoreApp,Version=v3.1::Tic_Tac_Toe_Tests.CellTests.DisplayCellValue_WhenCellValueIsX_ShouldReturnStringX&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::90FC31DE-2241-48B1-8949-27553CE4CE1E::.NETCoreApp,Version=v3.1::Tic_Tac_Toe_Tests.CellTests.DisplayCellValue_WhenCellValueIsO_ShouldReturnStringO&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::90FC31DE-2241-48B1-8949-27553CE4CE1E::.NETCoreApp,Version=v3.1::Tic_Tac_Toe_Tests.CellTests.DisplayCellValue_WhenCellValueIsEmpty_ShouldReturnStringDot&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::90FC31DE-2241-48B1-8949-27553CE4CE1E::.NETCoreApp,Version=v3.1::Tic_Tac_Toe_Tests.PlayerTests.CollectPlayerInput_ShouldReturnString&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=87760aef_002D3724_002D45e9_002Db1ba_002D2310bad2020f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ShouldReturnABoard_WhenCreateBoard" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;

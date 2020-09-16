@@ -66,6 +66,10 @@ namespace Tic_Tac_Toe
                     updatedBoard = previousBoard;
                 }
                 previousBoard = updatedBoard;
+                if (turn>9)
+                {
+                    Console.WriteLine("It is a draw!");
+                }
             }
         }
         private Board SortInput(string playerInput)

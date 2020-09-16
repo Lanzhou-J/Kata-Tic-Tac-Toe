@@ -53,17 +53,17 @@ namespace Tic_Tac_Toe
                 if (updatedBoard != null)
                 {
                     turn++;
+                    BoardOutput newBoardOutput = new BoardOutput(updatedBoard);
+                    newBoardOutput.Print();
+                    if (Rule.DetermineWin(updatedBoard, CurrentPlayer.CellValue))
+                    {
+                        Console.WriteLine($"The winner is {CurrentPlayer.Name}");
+                        Environment.Exit(1);
+                    }
                 }
                 else
                 {
                     updatedBoard = previousBoard;
-                }
-                BoardOutput newBoardOutput = new BoardOutput(updatedBoard);
-                newBoardOutput.Print();
-                if (Rule.DetermineWin(updatedBoard, CurrentPlayer.CellValue))
-                {
-                    Console.WriteLine($"The winner is {CurrentPlayer.Name}");
-                    Environment.Exit(1);
                 }
                 previousBoard = updatedBoard;
             }
@@ -105,8 +105,5 @@ namespace Tic_Tac_Toe
             Coord newCoord = new Coord(coordX, coordY);
             return newCoord;
         }
-
-
-
     }
 }

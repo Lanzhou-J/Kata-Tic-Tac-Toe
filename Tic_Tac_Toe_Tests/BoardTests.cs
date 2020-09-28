@@ -74,11 +74,13 @@ namespace Tic_Tac_Toe_Tests
         {
             int boardSize = 3;
             Board newBoard = new Board(boardSize);
-            Coord newCoord = new Coord(3,1);
-            Board updatedBoard = newBoard.UpdateBoard(newCoord, CellValue.X);
+            Location newLocation = new Location(3,1);
+            Board updatedBoard = newBoard.UpdateBoard(newLocation, CellValue.X);
             string updatedCellValue = updatedBoard
-                .Cells[boardSize * (newCoord.RowValueX - 1) + (newCoord.ColumnValueY - 1)].DisplayCellValue();
+                .Cells[boardSize * (newLocation.RowValueX - 1) + (newLocation.ColumnValueY - 1)].DisplayCellValue();
             Assert.Equal("X", updatedCellValue);
+            // check equal -> 2 list of Cells (framework/ loop through all the items in a list and compare each of them)
+            // Test Board not single cell.
         }
     }
 }

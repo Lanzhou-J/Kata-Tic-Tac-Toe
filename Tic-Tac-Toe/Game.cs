@@ -81,8 +81,8 @@ namespace Tic_Tac_Toe
                 QuitGame(CurrentPlayer.Name);
             }else if (Regex.IsMatch(playerInput, pattern))
             {
-                Coord newCoord = CreateCoord(playerInput);
-                Board updatedBoard = GameBoard.UpdateBoard(newCoord, CurrentPlayer.CellValue);
+                Location newLocation = CreateLocation(playerInput);
+                Board updatedBoard = GameBoard.UpdateBoard(newLocation, CurrentPlayer.CellValue);
                 return updatedBoard;
             }
             else
@@ -100,14 +100,14 @@ namespace Tic_Tac_Toe
             Environment.Exit(1);
         }
 
-        private Coord CreateCoord(string coordInput)
+        private Location CreateLocation(string locationInput)
         {
-            char xValue = coordInput[0];
-            char yValue = coordInput[2];
-            int coordX = (int) (xValue - '0');
-            int coordY = (int) (yValue - '0');
-            Coord newCoord = new Coord(coordX, coordY);
-            return newCoord;
+            char xValue = locationInput[0];
+            char yValue = locationInput[2];
+            int locationX = (int) (xValue - '0');
+            int locationY = (int) (yValue - '0');
+            Location newLocation = new Location(locationX, locationY);
+            return newLocation;
         }
     }
 }

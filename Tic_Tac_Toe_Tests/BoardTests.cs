@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Xunit;
 using Tic_Tac_Toe;
 
@@ -5,10 +6,7 @@ namespace Tic_Tac_Toe_Tests
 {
     public class BoardTests
     {
-        
-        // Add comments -> test planning
-        // user input 1,3, -> update Board
-        
+
         [Theory]
         [InlineData(3)]
         [InlineData(4)]
@@ -76,11 +74,16 @@ namespace Tic_Tac_Toe_Tests
             Board newBoard = new Board(boardSize);
             Location newLocation = new Location(3,1);
             Board updatedBoard = newBoard.UpdateBoard(newLocation, CellValue.X);
-            string updatedCellValue = updatedBoard
-                .Cells[boardSize * (newLocation.RowValueX - 1) + (newLocation.ColumnValueY - 1)].DisplayCellValue();
-            Assert.Equal("X", updatedCellValue);
-            // check equal -> 2 list of Cells (framework/ loop through all the items in a list and compare each of them)
-            // Test Board not single cell.
+
+            List<CellValue> cellValues = new List<CellValue> {CellValue.Empty, CellValue.Empty, CellValue.Empty, CellValue.Empty, CellValue.Empty, CellValue.Empty, CellValue.X, CellValue.Empty, CellValue.Empty};
+            int index = 0;
+            foreach (var cell in updatedBoard.Cells)
+            {
+                Assert.Equal(cellValues[index], cell.Value);
+                index++;
+            }
+            
+            
         }
     }
 }

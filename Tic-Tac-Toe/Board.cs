@@ -33,8 +33,8 @@ namespace Tic_Tac_Toe
             }
             else
             {
-                Console.WriteLine("Oh no, a piece is already at this place! Try again...");
-                return null;
+                throw new ArgumentException($"{location} is not an even number",
+                    nameof(location));
             }
         }
     }

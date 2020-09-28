@@ -5,10 +5,7 @@ namespace Tic_Tac_Toe_Tests
 {
     public class CellTests
     {
-        // When Value is X, DisplayCellValue should return "X".
-        // When Value is O, DisplayCellValue should return "O".
-        // When Value is Empty, DisplayCellValue should return ".".
-        
+
         [Fact]
         public void DisplayCellValue_WhenCellValueIsX_ShouldReturnStringX()
         {

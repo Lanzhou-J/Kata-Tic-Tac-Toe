@@ -20,10 +20,18 @@ namespace Tic_Tac_Toe
         // and use boardoutput as an argument in Start method (IPrintBoard xxx)
         public void Start()
         {
-            WelcomePlayer();
-            BoardOutput newBoardOutput = new BoardOutput(GameBoard);
-            newBoardOutput.Print();
-            TakeTurns();
+            try
+            {
+                WelcomePlayer();
+                BoardOutput newBoardOutput = new BoardOutput(GameBoard);
+                newBoardOutput.Print();
+                TakeTurns();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
         }
 
         private void WelcomePlayer()
@@ -87,8 +95,8 @@ namespace Tic_Tac_Toe
             }
             else
             {
-                Console.WriteLine("It is not a valid input.");
-                return null;
+                throw new ArgumentException($"The input: {playerInput} is not valid.",
+                    nameof(playerInput));
             }
 
             return null;

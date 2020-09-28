@@ -33,7 +33,7 @@ namespace Tic_Tac_Toe
             }
             else
             {
-                throw new ArgumentException($"{location} is not an even number",
+                throw new ArgumentException($"{location} is not valid. The cell is not empty.",
                     nameof(location));
             }
         }

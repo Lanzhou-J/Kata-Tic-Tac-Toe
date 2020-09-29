@@ -16,13 +16,22 @@ namespace Tic_Tac_Toe
             Player2 = new Player(CellValue.O, "Player 2");
             CurrentPlayer = Player1;
         }
-
+        // move BoardOutput to Program.cs
+        // and use boardoutput as an argument in Start method (IPrintBoard xxx)
         public void Start()
         {
-            WelcomePlayer();
-            BoardOutput newBoardOutput = new BoardOutput(GameBoard);
-            newBoardOutput.Print();
-            TakeTurns();
+            try
+            {
+                WelcomePlayer();
+                BoardOutput newBoardOutput = new BoardOutput(GameBoard);
+                newBoardOutput.Print();
+                TakeTurns();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
         }
 
         private void WelcomePlayer()
@@ -45,38 +54,49 @@ namespace Tic_Tac_Toe
                 {
                     CurrentPlayer = Player1;
                 }
-                PlayerInput newInput = new PlayerInput();
-                string playerInput = newInput.CollectPlayerInput(CurrentPlayer.Name, CurrentPlayer.CellValue.ToString());
+                
+                string playerInput = CurrentPlayer.CollectPlayerInput();
                 Board updatedBoard = SortInput(playerInput);
+                // Compare objects;
                 if (updatedBoard != null)
                 {
                     turn++;
+                    BoardOutput newBoardOutput = new BoardOutput(updatedBoard);
+                    newBoardOutput.Print();
+                    if (Rule.DetermineWin(updatedBoard, CurrentPlayer.CellValue))
+                    {
+                        Console.WriteLine($"The winner is {CurrentPlayer.Name}");
+                        Environment.Exit(1);
+                    }
                 }
                 else
                 {
                     updatedBoard = previousBoard;
                 }
-                BoardOutput newBoardOutput = new BoardOutput(updatedBoard);
-                newBoardOutput.Print();
                 previousBoard = updatedBoard;
+                if (turn>9)
+                {
+                    Console.WriteLine("It is a draw!");
+                }
             }
         }
-        private dynamic SortInput(string playerInput)
+        private Board SortInput(string playerInput)
         {
-            string pattern = @"^[1-3],[1-3]$";
+            
+            string pattern = $@"^[1-{GameBoard.Size}],[1-{GameBoard.Size}]$";
             if (playerInput == "q")
             {
                 QuitGame(CurrentPlayer.Name);
             }else if (Regex.IsMatch(playerInput, pattern))
             {
-                Coord newCoord = CreateCoord(playerInput);
-                Board updatedBoard = GameBoard.UpdateBoard(newCoord, CurrentPlayer.CellValue);
+                Location newLocation = CreateLocation(playerInput);
+                Board updatedBoard = GameBoard.UpdateBoard(newLocation, CurrentPlayer.CellValue);
                 return updatedBoard;
             }
             else
             {
-                Console.WriteLine("It is not a valid input.");
-                return null;
+                throw new ArgumentException($"The input: {playerInput} is not valid.",
+                    nameof(playerInput));
             }
 
             return null;
@@ -88,17 +108,14 @@ namespace Tic_Tac_Toe
             Environment.Exit(1);
         }
 
-        private Coord CreateCoord(string coordInput)
+        private Location CreateLocation(string locationInput)
         {
-            char xValue = coordInput[0];
-            char yValue = coordInput[2];
-            int coordX = (int) (xValue - '0');
-            int coordY = (int) (yValue - '0');
-            Coord newCoord = new Coord(coordX, coordY);
-            return newCoord;
+            char xValue = locationInput[0];
+            char yValue = locationInput[2];
+            int locationX = (int) (xValue - '0');
+            int locationY = (int) (yValue - '0');
+            Location newLocation = new Location(locationX, locationY);
+            return newLocation;
         }
-
-
-
     }
 }

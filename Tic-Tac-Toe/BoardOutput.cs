@@ -2,7 +2,7 @@ using System;
 
 namespace Tic_Tac_Toe
 {
-    public class BoardOutput:IPrintBoard
+    public class BoardOutput
     {
         private Board Board { get; set;}
 
@@ -20,7 +20,6 @@ namespace Tic_Tac_Toe
                 for (int j = 1; j <= Board.Size; j++)
                 {
                     int index = row + (j - 1);
-                    // Console.Write(index);
                     Console.Write(Board.Cells[index].DisplayCellValue());
                     Console.Write(" "); 
                 }

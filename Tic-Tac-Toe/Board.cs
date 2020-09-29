@@ -16,16 +16,16 @@ namespace Tic_Tac_Toe
             {
                 for (int col = 1; col <= Size; col++)
                 {
-                    Coord newCoord = new Coord(row, col);
-                    Cell newCell = new Cell(newCoord);
+                    Location newLocation = new Location(row, col);
+                    Cell newCell = new Cell(newLocation);
                     this.Cells.Add(newCell);                    
                 }
             }
         }
 
-        public Board UpdateBoard(Coord coord, CellValue cellValue)
+        public Board UpdateBoard(Location location, CellValue cellValue)
         {
-            int index = this.Size * (coord.RowValueX - 1) + (coord.ColumnValueY - 1);
+            int index = this.Size * (location.RowValueX - 1) + (location.ColumnValueY - 1);
             if (this.Cells[index].Value == CellValue.Empty)
             {
                 this.Cells[index].Value = cellValue;
@@ -33,12 +33,9 @@ namespace Tic_Tac_Toe
             }
             else
             {
-                Console.WriteLine("Oh no, a piece is already at this place! Try again...");
-                return null;
+                throw new ArgumentException($"{location} is not valid. The cell is not empty.",
+                    nameof(location));
             }
-
-
-
         }
     }
 }

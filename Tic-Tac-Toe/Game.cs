@@ -95,8 +95,10 @@ namespace Tic_Tac_Toe
             }
             else
             {
-                throw new ArgumentException($"The input: {playerInput} is not valid.",
-                    nameof(playerInput));
+                // throw new ArgumentException($"The input: {playerInput} is not valid.",
+                //     nameof(playerInput));
+                Console.WriteLine("It is not a valid input.");
+                return null;
             }
 
             return null;

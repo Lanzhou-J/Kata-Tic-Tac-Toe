@@ -87,22 +87,21 @@ namespace Tic_Tac_Toe
             if (playerInput == "q")
             {
                 QuitGame(CurrentPlayer.Name);
-            }else if (Regex.IsMatch(playerInput, pattern))
+                return null;
+            }
+            if (Regex.IsMatch(playerInput, pattern))
             {
                 Location newLocation = CreateLocation(playerInput);
                 Board updatedBoard = GameBoard.UpdateBoard(newLocation, CurrentPlayer.CellValue);
                 return updatedBoard;
             }
-            else
-            {
-                // throw new ArgumentException($"The input: {playerInput} is not valid.",
-                //     nameof(playerInput));
-                Console.WriteLine("It is not a valid input.");
-                return null;
-            }
-
+          
+            // throw new ArgumentException($"The input: {playerInput} is not valid.",
+            //     nameof(playerInput));
+            Console.WriteLine("It is not a valid input.");
             return null;
-        }
+            
+    }
 
         private void QuitGame(string player)
         {

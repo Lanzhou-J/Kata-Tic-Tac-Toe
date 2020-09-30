@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 namespace Tic_Tac_Toe
 {
@@ -56,7 +57,7 @@ namespace Tic_Tac_Toe
                 }
                 
                 string playerInput = CurrentPlayer.CollectPlayerInput();
-                Board updatedBoard = SortInput(playerInput);
+                Board updatedBoard = DetermineActionFromInput(playerInput);
                 // Compare objects;
                 if (updatedBoard != null)
                 {
@@ -80,7 +81,7 @@ namespace Tic_Tac_Toe
                 }
             }
         }
-        private Board SortInput(string playerInput)
+        private Board DetermineActionFromInput(string playerInput)
         {
             
             string pattern = $@"^[1-{GameBoard.Size}],[1-{GameBoard.Size}]$";
@@ -104,6 +105,32 @@ namespace Tic_Tac_Toe
             return null;
         }
 
+        private IAction DetermineActionFromInput(string playerInput)
+        {
+            if (playerInput == "q")
+            {
+                return new QuitAction();
+            }
+            else
+            {
+                throw new InvalidEnumArgumentException();
+            }
+        }
+
+        public void Play()
+        {
+            //...
+            try
+            {
+                var action = DetermineActionFromInput("");
+                action.Act();
+            }
+            catch (InvalidEnumArgumentException e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
         private void QuitGame(string player)
         {
             Console.WriteLine($"{player} quit the game.");
@@ -118,6 +145,28 @@ namespace Tic_Tac_Toe
             int locationY = (int) (yValue - '0');
             Location newLocation = new Location(locationX, locationY);
             return newLocation;
+        }
+    }
+
+    
+    internal interface IAction
+    {
+        void Act();
+    }
+
+    public class QuitAction : IAction
+    {
+        public void Act()
+        {
+            //quit game
+        }
+    }
+    
+    public class MoveAction : IAction
+    {
+        public void Act()
+        {
+            //update board
         }
     }
 }

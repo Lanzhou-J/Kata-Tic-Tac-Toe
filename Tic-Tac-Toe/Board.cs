@@ -22,7 +22,10 @@ namespace Tic_Tac_Toe
                 }
             }
         }
-
+        
+        
+        
+        // validation and updateboard
         public Board UpdateBoard(Location location, CellValue cellValue)
         {
             int index = this.Size * (location.RowValueX - 1) + (location.ColumnValueY - 1);

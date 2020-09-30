@@ -33,10 +33,10 @@ namespace Tic_Tac_Toe
             }
             else
             {
-                // throw new ArgumentException($"{location} is not valid. The cell is not empty.",
-                //     nameof(location));
-                Console.WriteLine("Oh no, a piece is already at this place! Try again...");
-                return null;
+                throw new ArgumentException($"{location} is not valid. The cell is not empty.",
+                    nameof(location));
+                // Console.WriteLine("Oh no, a piece is already at this place! Try again...");
+                // return null;
             }
         }
     }

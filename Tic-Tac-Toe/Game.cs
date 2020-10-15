@@ -1,14 +1,13 @@
 using System;
-using System.ComponentModel;
 using System.Text.RegularExpressions;
 namespace Tic_Tac_Toe
 {
     public class Game
     {
         private Player CurrentPlayer { get; set; }
-        private Player Player1 { get; set; }
-        private Player Player2 { get; set; }
-        private Board GameBoard { get; set; }
+        private Player Player1 { get; }
+        private Player Player2 { get; }
+        private Board GameBoard { get; }
         
         private readonly IInputOutput _iio;
 
@@ -17,7 +16,7 @@ namespace Tic_Tac_Toe
             _iio = iio;
 
             GameBoard = new Board(3);
-            IInputOutput console = new ConsoleInputOutput();;
+            IInputOutput console = new ConsoleInputOutput();
             Player1 = new Player(CellValue.X, "Player 1", console);
             Player2 = new Player(CellValue.O, "Player 2", console);
             CurrentPlayer = Player1;
@@ -144,8 +143,8 @@ namespace Tic_Tac_Toe
         {
             char xValue = locationInput[0];
             char yValue = locationInput[2];
-            int locationX = (int) (xValue - '0');
-            int locationY = (int) (yValue - '0');
+            int locationX = xValue - '0';
+            int locationY = yValue - '0';
             Location newLocation = new Location(locationX, locationY);
             return newLocation;
         }

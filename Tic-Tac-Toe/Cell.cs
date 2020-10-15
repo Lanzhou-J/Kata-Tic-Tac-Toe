@@ -1,10 +1,8 @@
-using System;
-
 namespace Tic_Tac_Toe
 {
     public class Cell
     {
-        public Location Position { get; set; }
+        public Location Position { get; private set; }
         public CellValue Value { get; set; }
 
         public Cell()

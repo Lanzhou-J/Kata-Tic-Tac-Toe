@@ -3,10 +3,10 @@ namespace Tic_Tac_Toe
 {
     public class Player
     {
-        public CellValue CellValue { get; set; }
-        public string Name { get; set; }
+        public CellValue CellValue { get; private set; }
+        public string Name { get; private set; }
 
-        public bool IsCurrentPlayer { get; set; }
+        public bool IsCurrentPlayer { get; }
         
         private readonly IInputOutput _iio;
 

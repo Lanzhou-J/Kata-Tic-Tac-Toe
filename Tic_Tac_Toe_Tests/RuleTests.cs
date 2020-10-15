@@ -5,9 +5,7 @@ namespace Tic_Tac_Toe_Tests
 {
     public class RuleTests
     {
-
-
-        Board _newBoard = new Board(3);
+        private readonly Board _newBoard = new Board(3);
 
         [Fact]
         public void DetermineWin_ShouldReturnTrue_When3SameValueCellsOnTheSameRow()

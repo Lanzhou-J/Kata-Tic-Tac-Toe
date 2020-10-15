@@ -13,7 +13,6 @@ namespace Tic_Tac_Toe
 
         public void Print()
         {
-            int boardArea = Board.Size * Board.Size;
             for (int i = 1; i <= Board.Size; i++)
             {
                 int row = Board.Size * (i - 1);

@@ -5,8 +5,8 @@ namespace Tic_Tac_Toe
 {
     public class Board
     {
-        public int Size { get; set; }
-        public List<Cell> Cells { get; set; }
+        public int Size { get; private set; }
+        public List<Cell> Cells { get; private set; }
 
         public Board(int size)
         {

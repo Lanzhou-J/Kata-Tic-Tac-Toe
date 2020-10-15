@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Tic_Tac_Toe
+﻿namespace Tic_Tac_Toe
 {
     public enum CellValue
     {
@@ -12,7 +9,7 @@ namespace Tic_Tac_Toe
 
     static class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var console = new ConsoleInputOutput();
             Game newGame = new Game(console);

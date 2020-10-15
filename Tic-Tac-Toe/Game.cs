@@ -14,22 +14,18 @@ namespace Tic_Tac_Toe
         public Game(IInputOutput iio)
         {
             _iio = iio;
-
             GameBoard = new Board(3);
-            IInputOutput console = new ConsoleInputOutput();
-            Player1 = new Player(CellValue.X, "Player 1", console);
-            Player2 = new Player(CellValue.O, "Player 2", console);
+            Player1 = new Player(CellValue.X, "Player 1", _iio);
+            Player2 = new Player(CellValue.O, "Player 2", _iio);
             CurrentPlayer = Player1;
         }
-        // move BoardOutput to Program.cs
-        // and use boardoutput as an argument in Start method (IPrintBoard xxx)
+      
         public void Start()
         {
             try
             {
                 WelcomePlayer();
-                BoardOutput newBoardOutput = new BoardOutput(GameBoard);
-                newBoardOutput.Print();
+                _iio.PrintBoard(GameBoard);
                 TakeTurns();
             }
             catch (Exception e)
@@ -66,8 +62,7 @@ namespace Tic_Tac_Toe
                 if (updatedBoard != null)
                 {
                     turn++;
-                    BoardOutput newBoardOutput = new BoardOutput(updatedBoard);
-                    newBoardOutput.Print();
+                    _iio.PrintBoard(updatedBoard);
                     if (Rule.DetermineWin(updatedBoard, CurrentPlayer.CellValue))
                     {
                         _iio.Output($"The winner is {CurrentPlayer.Name}");

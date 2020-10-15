@@ -12,9 +12,8 @@
         static void Main()
         {
             var console = new ConsoleInputOutput();
-            Game newGame = new Game(console);
+            var newGame = new Game(console);
             newGame.Start();
-            
         }
     }
 }

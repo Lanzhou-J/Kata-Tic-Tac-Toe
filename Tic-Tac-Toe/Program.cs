@@ -14,7 +14,8 @@ namespace Tic_Tac_Toe
     {
         static void Main(string[] args)
         {
-            Game newGame = new Game();
+            var console = new ConsoleInputOutput();
+            Game newGame = new Game(console);
             newGame.Start();
             
         }

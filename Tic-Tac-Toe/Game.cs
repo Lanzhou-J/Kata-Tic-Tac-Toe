@@ -9,12 +9,17 @@ namespace Tic_Tac_Toe
         private Player Player1 { get; set; }
         private Player Player2 { get; set; }
         private Board GameBoard { get; set; }
+        
+        private readonly IInputOutput _iio;
 
-        public Game()
+        public Game(IInputOutput iio)
         {
+            _iio = iio;
+
             GameBoard = new Board(3);
-            Player1 = new Player(CellValue.X, "Player 1");
-            Player2 = new Player(CellValue.O, "Player 2");
+            IInputOutput console = new ConsoleInputOutput();;
+            Player1 = new Player(CellValue.X, "Player 1", console);
+            Player2 = new Player(CellValue.O, "Player 2", console);
             CurrentPlayer = Player1;
         }
         // move BoardOutput to Program.cs
@@ -37,8 +42,8 @@ namespace Tic_Tac_Toe
 
         private void WelcomePlayer()
         {
-            Console.WriteLine("Welcome to Tic Tac Toe!");
-            Console.WriteLine("Here's the current board:");  
+            _iio.Output("Welcome to Tic Tac Toe!");
+            _iio.Output("Here's the current board:");  
         }
 
         private void TakeTurns()
@@ -66,7 +71,7 @@ namespace Tic_Tac_Toe
                     newBoardOutput.Print();
                     if (Rule.DetermineWin(updatedBoard, CurrentPlayer.CellValue))
                     {
-                        Console.WriteLine($"The winner is {CurrentPlayer.Name}");
+                        _iio.Output($"The winner is {CurrentPlayer.Name}");
                         Environment.Exit(1);
                     }
                 }
@@ -77,7 +82,7 @@ namespace Tic_Tac_Toe
                 previousBoard = updatedBoard;
                 if (turn>9)
                 {
-                    Console.WriteLine("It is a draw!");
+                    _iio.Output("It is a draw!");
                 }
             }
         }
@@ -98,42 +103,40 @@ namespace Tic_Tac_Toe
             {
                 // throw new ArgumentException($"The input: {playerInput} is not valid.",
                 //     nameof(playerInput));
-                Console.WriteLine("It is not a valid input.");
+                _iio.Output("It is not a valid input.");
                 return null;
             }
 
             return null;
         }
 
-        private IAction DetermineActionFromInput(string playerInput)
-        {
-            if (playerInput == "q")
-            {
-                return new QuitAction();
-            }
-            else
-            {
-                throw new InvalidEnumArgumentException();
-            }
-        }
-
-        public void Play()
-        {
-            //...
-            try
-            {
-                var action = DetermineActionFromInput("");
-                action.Act();
-            }
-            catch (InvalidEnumArgumentException e)
-            {
-                Console.WriteLine(e);
-            }
-        }
+        // private IAction DetermineActionFromUserInput(string playerInput)
+        // {
+        //     if (playerInput == "q")
+        //     {
+        //         return new QuitAction();
+        //     }
+        //
+        //     throw new InvalidEnumArgumentException();
+        // }
+        //
+        // public void Play()
+        // {
+        //     //...
+        //     try
+        //     {
+        //         var action = DetermineActionFromInput("");
+        //         action.Act();
+        //     }
+        //     catch (InvalidEnumArgumentException e)
+        //     {
+        //         Console.WriteLine(e);
+        //     }
+        // }
 
         private void QuitGame(string player)
         {
-            Console.WriteLine($"{player} quit the game.");
+            _iio.Output($"{player} quit the game.");
             Environment.Exit(1);
         }
 
@@ -149,24 +152,25 @@ namespace Tic_Tac_Toe
     }
 
     
-    internal interface IAction
-    {
-        void Act();
-    }
-
-    public class QuitAction : IAction
-    {
-        public void Act()
-        {
-            //quit game
-        }
-    }
-    
-    public class MoveAction : IAction
-    {
-        public void Act()
-        {
-            //update board
-        }
-    }
+    // internal interface IAction
+    // {
+    //     void Act();
+    // }
+    //
+    // public class QuitAction : IAction
+    // {
+    //     public void Act()
+    //     {
+    //         Console.WriteLine("quit the game.");
+    //         Environment.Exit(1);
+    //     }
+    // }
+    //
+    // public class MoveAction : IAction
+    // {
+    //     public void Act()
+    //     {
+    //         //update board
+    //     }
+    // }
 }

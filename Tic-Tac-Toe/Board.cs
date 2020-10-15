@@ -22,9 +22,22 @@ namespace Tic_Tac_Toe
                 }
             }
         }
-        
-        
-        
+
+        // private bool ValidateLocation(Location location, CellValue cellValue)
+        // {
+        //     int index = this.Size * (location.RowValueX - 1) + (location.ColumnValueY - 1);
+        //     if (this.Cells[index].Value == CellValue.Empty)
+        //     {
+        //         this.Cells[index].Value = cellValue;
+        //         return this;
+        //     }
+        //     else
+        //     {
+        //     }
+        //
+        //     return true;
+        // }
+
         // validation and updateboard
         public Board UpdateBoard(Location location, CellValue cellValue)
         {
@@ -36,10 +49,10 @@ namespace Tic_Tac_Toe
             }
             else
             {
-                throw new ArgumentException($"{location} is not valid. The cell is not empty.",
-                    nameof(location));
-                // Console.WriteLine("Oh no, a piece is already at this place! Try again...");
-                // return null;
+                // throw new ArgumentException($"{location} is not valid. The cell is not empty.",
+                //     nameof(location));
+                Console.WriteLine("Oh no, a piece is already at this place! Try again...");
+                return null;
             }
         }
     }

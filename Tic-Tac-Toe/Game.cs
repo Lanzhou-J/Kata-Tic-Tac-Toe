@@ -14,14 +14,14 @@ namespace Tic_Tac_Toe
         private readonly IInputOutput _iio;
         private readonly IRule _rule;
 
-        public Game(IInputOutput iio, IRule rule, GameState gameState = GameState.Continue)
+        public Game(IInputOutput iio, IRule rule, Player player1, Player player2, GameState gameState = GameState.Continue)
         {
             _iio = iio;
             _rule = rule;
             GameState = gameState;
             GameBoard = new Board(3);
-            Player1 = new Player(CellValue.X, "Player 1");
-            Player2 = new Player(CellValue.O, "Player 2");
+            Player1 = player1;
+            Player2 = player2;
             CurrentPlayer = Player1;
         }
 

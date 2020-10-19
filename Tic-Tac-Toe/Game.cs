@@ -47,9 +47,10 @@ namespace Tic_Tac_Toe
                 string playerInput = _iio.CollectPlayerInput(CurrentPlayer);
                 DetermineActionFromInput(playerInput);
                 
-                if (_turn == GameBoard.Size * GameBoard.Size)
+                if (_turn > GameBoard.Size * GameBoard.Size)
                 {
                     GameState = GameState.Draw;
+                    _iio.Output("It is a draw!");
                 }
             }
             

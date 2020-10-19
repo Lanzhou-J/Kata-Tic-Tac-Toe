@@ -17,7 +17,7 @@ namespace Tic_Tac_Toe
             GameBoard = new Board(3);
             Player1 = new Player(CellValue.X, "Player 1", _iio);
             Player2 = new Player(CellValue.O, "Player 2", _iio);
-            CurrentPlayer = Player1;
+            //TO DO: Player does not need to interact with iio.
         }
       
         public void Start()

@@ -6,7 +6,7 @@ namespace Tic_Tac_Toe
         public CellValue CellValue { get; private set; }
         public string Name { get; private set; }
 
-        public bool IsCurrentPlayer { get; }
+        public bool IsCurrentPlayer { get; set; }
         
         private readonly IInputOutput _iio;
 

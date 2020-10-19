@@ -37,10 +37,5 @@ namespace Tic_Tac_Toe
             }
 
         }
-
-        public void Output(Exception exception)
-        {
-            Console.WriteLine(exception);
-        }
     }
 }

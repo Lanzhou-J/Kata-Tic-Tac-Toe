@@ -13,7 +13,7 @@
         {
             var console = new ConsoleInputOutput();
             var newGame = new Game(console);
-            newGame.Start();
+            newGame.Play();
         }
     }
 }

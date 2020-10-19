@@ -7,11 +7,14 @@ namespace Tic_Tac_Toe
         public string Name { get; private set; }
 
         // public bool IsCurrentPlayer { get; set; }
+        
+        public bool IsWinner { get; set; }
 
         public Player(CellValue cellValue, string name)
         {
             CellValue = cellValue;
             Name = name;
+            IsWinner = false;
             // IsCurrentPlayer = false;
         }
     }

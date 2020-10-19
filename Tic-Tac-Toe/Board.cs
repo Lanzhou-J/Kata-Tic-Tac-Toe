@@ -23,37 +23,39 @@ namespace Tic_Tac_Toe
             }
         }
 
-        // private bool ValidateLocation(Location location, CellValue cellValue)
-        // {
-        //     int index = this.Size * (location.RowValueX - 1) + (location.ColumnValueY - 1);
-        //     if (this.Cells[index].Value == CellValue.Empty)
-        //     {
-        //         this.Cells[index].Value = cellValue;
-        //         return this;
-        //     }
-        //     else
-        //     {
-        //     }
-        //
-        //     return true;
-        // }
+        private int GetCellIndexBasedOnLocation(Location location)
+        {
+            int index = Size * (location.RowValueX - 1) + (location.ColumnValueY - 1);
+            return index;
+        }
+
+        public bool LocationCellIsEmpty(Location location)
+        {
+            int index = GetCellIndexBasedOnLocation(location);
+            
+            if (Cells[index].Value == CellValue.Empty)
+            {
+                return true;
+            }
+            
+            return false;
+        }
 
         // validation and updateboard
-        public Board UpdateBoard(Location location, CellValue cellValue)
+        public void UpdateBoard(Location location, CellValue cellValue)
         {
-            int index = this.Size * (location.RowValueX - 1) + (location.ColumnValueY - 1);
-            if (this.Cells[index].Value == CellValue.Empty)
+            int index = GetCellIndexBasedOnLocation(location);
+            if (LocationCellIsEmpty(location))
             {
-                this.Cells[index].Value = cellValue;
-                return this;
+                Cells[index].Value = cellValue;
             }
-            else
-            {
+            // else
+            // {
                 // throw new ArgumentException($"{location} is not valid. The cell is not empty.",
                 //     nameof(location));
-                Console.WriteLine("Oh no, a piece is already at this place! Try again...");
-                return null;
-            }
+                // Console.WriteLine("Oh no, a piece is already at this place! Try again...");
+                // return null;
+            // }
         }
     }
 }

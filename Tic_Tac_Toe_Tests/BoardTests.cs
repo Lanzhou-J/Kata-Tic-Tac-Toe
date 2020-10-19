@@ -73,11 +73,11 @@ namespace Tic_Tac_Toe_Tests
             int boardSize = 3;
             Board newBoard = new Board(boardSize);
             Location newLocation = new Location(3,1);
-            Board updatedBoard = newBoard.UpdateBoard(newLocation, CellValue.X);
+            newBoard.UpdateBoard(newLocation, CellValue.X);
 
             List<CellValue> cellValues = new List<CellValue> {CellValue.Empty, CellValue.Empty, CellValue.Empty, CellValue.Empty, CellValue.Empty, CellValue.Empty, CellValue.X, CellValue.Empty, CellValue.Empty};
             int index = 0;
-            foreach (var cell in updatedBoard.Cells)
+            foreach (var cell in newBoard.Cells)
             {
                 Assert.Equal(cellValues[index], cell.Value);
                 index++;

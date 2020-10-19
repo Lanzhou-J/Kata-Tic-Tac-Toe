@@ -1,5 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
+
 namespace Tic_Tac_Toe
 {
     public class Game
@@ -8,29 +9,32 @@ namespace Tic_Tac_Toe
         private Player Player1 { get; }
         private Player Player2 { get; }
         private Board GameBoard { get; }
-        
+
+        public GameState GameState { get; private set; }
+
         private readonly IInputOutput _iio;
 
-        public Game(IInputOutput iio)
+        public Game(IInputOutput iio, GameState gameState = GameState.Continue)
         {
             _iio = iio;
+            CurrentPlayer = null;
+            GameState = gameState;
             GameBoard = new Board(3);
-            Player1 = new Player(CellValue.X, "Player 1", _iio);
-            Player2 = new Player(CellValue.O, "Player 2", _iio);
-            //TO DO: Player does not need to interact with iio.
+            Player1 = new Player(CellValue.X, "Player 1");
+            Player2 = new Player(CellValue.O, "Player 2");
         }
-      
+
         public void Start()
         {
             try
             {
                 WelcomePlayer();
-                _iio.PrintBoard(GameBoard);
+                _iio.Output(GameBoard);
                 TakeTurns();
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _iio.Output(e);
             }
 
         }
@@ -38,14 +42,16 @@ namespace Tic_Tac_Toe
         private void WelcomePlayer()
         {
             _iio.Output("Welcome to Tic Tac Toe!");
-            _iio.Output("Here's the current board:");  
+            _iio.Output("Here's the current board:");
         }
+
+
 
         private void TakeTurns()
         {
             Board previousBoard = GameBoard;
             int turn = 1;
-            while (turn <= GameBoard.Size*GameBoard.Size)  
+            while (turn <= GameBoard.Size * GameBoard.Size)
             {
                 if (turn % 2 == 0)
                 {
@@ -55,14 +61,14 @@ namespace Tic_Tac_Toe
                 {
                     CurrentPlayer = Player1;
                 }
-                
-                string playerInput = CurrentPlayer.CollectPlayerInput();
+
+                string playerInput = _iio.CollectPlayerInput(CurrentPlayer);
                 Board updatedBoard = DetermineActionFromInput(playerInput);
                 // Compare objects;
                 if (updatedBoard != null)
                 {
                     turn++;
-                    _iio.PrintBoard(updatedBoard);
+                    _iio.Output(updatedBoard);
                     if (Rule.DetermineWin(updatedBoard, CurrentPlayer.CellValue))
                     {
                         _iio.Output($"The winner is {CurrentPlayer.Name}");
@@ -73,21 +79,24 @@ namespace Tic_Tac_Toe
                 {
                     updatedBoard = previousBoard;
                 }
+
                 previousBoard = updatedBoard;
-                if (turn>9)
+                if (turn > 9)
                 {
                     _iio.Output("It is a draw!");
                 }
             }
         }
+
         private Board DetermineActionFromInput(string playerInput)
         {
-            
+
             string pattern = $@"^[1-{GameBoard.Size}],[1-{GameBoard.Size}]$";
             if (playerInput == "q")
             {
                 QuitGame(CurrentPlayer.Name);
-            }else if (Regex.IsMatch(playerInput, pattern))
+            }
+            else if (Regex.IsMatch(playerInput, pattern))
             {
                 Location newLocation = CreateLocation(playerInput);
                 Board updatedBoard = GameBoard.UpdateBoard(newLocation, CurrentPlayer.CellValue);
@@ -144,27 +153,29 @@ namespace Tic_Tac_Toe
             return newLocation;
         }
     }
-
-    
-    // internal interface IAction
-    // {
-    //     void Act();
-    // }
-    //
-    // public class QuitAction : IAction
-    // {
-    //     public void Act()
-    //     {
-    //         Console.WriteLine("quit the game.");
-    //         Environment.Exit(1);
-    //     }
-    // }
-    //
-    // public class MoveAction : IAction
-    // {
-    //     public void Act()
-    //     {
-    //         //update board
-    //     }
-    // }
 }
+
+
+
+//     internal interface IAction
+//     {
+//         void Act();
+//     }
+//     
+//     public class QuitAction : IAction
+//     {
+//         public void Act()
+//         {
+//             Console.WriteLine("quit the game.");
+//             Environment.Exit(1);
+//         }
+//     }
+//     
+//     public class MoveAction : IAction
+//     {
+//         public void Act()
+//         {
+//             //update board
+//         }
+//     }
+// }

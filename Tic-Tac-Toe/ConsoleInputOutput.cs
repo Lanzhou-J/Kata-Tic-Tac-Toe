@@ -10,12 +10,19 @@ namespace Tic_Tac_Toe
             return Console.ReadLine();
         }
         
+        public string CollectPlayerInput(Player player)
+        {
+            var instruction = $"{player.Name} enter a coord x,y to place your {player.CellValue} or enter 'q' to give up: ";
+            var input = Ask(instruction);
+            return input;
+        }
+        
         public void Output(string message)
         {
             Console.WriteLine(message);
         }
 
-        public void PrintBoard(Board board)
+        public void Output(Board board)
         {
             for (int i = 1; i <= board.Size; i++)
             {
@@ -30,6 +37,10 @@ namespace Tic_Tac_Toe
             }
 
         }
-        
+
+        public void Output(Exception exception)
+        {
+            Console.WriteLine(exception);
+        }
     }
 }

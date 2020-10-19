@@ -6,6 +6,7 @@ namespace Tic_Tac_Toe_Tests
     public class RuleTests
     {
         private readonly Board _newBoard = new Board(3);
+        private readonly TicTacToeRule _rule = new TicTacToeRule();
 
         [Fact]
         public void DetermineWin_ShouldReturnTrue_When3SameValueCellsOnTheSameRow()
@@ -16,7 +17,7 @@ namespace Tic_Tac_Toe_Tests
             _newBoard.UpdateBoard(new Location(2, 2), CellValue.O);
             _newBoard.UpdateBoard(new Location(1, 3), CellValue.X);
 
-            var result = Rule.DetermineWin(_newBoard, CellValue.X);
+            var result = _rule.DetermineWin(_newBoard, CellValue.X);
             
             Assert.True(result);
         }
@@ -30,7 +31,7 @@ namespace Tic_Tac_Toe_Tests
             _newBoard.UpdateBoard(new Location(2, 2), CellValue.O);
             _newBoard.UpdateBoard(new Location(1, 3), CellValue.X);
         
-            var result = Rule.DetermineWin(_newBoard, CellValue.O);
+            var result = _rule.DetermineWin(_newBoard, CellValue.O);
             
             Assert.False(result);
         }
@@ -44,7 +45,7 @@ namespace Tic_Tac_Toe_Tests
             _newBoard.UpdateBoard(new Location(2, 2), CellValue.O);
             _newBoard.UpdateBoard(new Location(3, 3), CellValue.X);
         
-            var result = Rule.DetermineWin(_newBoard, CellValue.X);
+            var result = _rule.DetermineWin(_newBoard, CellValue.X);
             
             Assert.True(result);
         }
@@ -58,7 +59,7 @@ namespace Tic_Tac_Toe_Tests
             _newBoard.UpdateBoard(new Location(3, 1), CellValue.O);
             _newBoard.UpdateBoard(new Location(3, 2), CellValue.X);
         
-            var result = Rule.DetermineWin(_newBoard, CellValue.O);
+            var result = _rule.DetermineWin(_newBoard, CellValue.O);
             
             Assert.False(result);
         }
@@ -72,7 +73,7 @@ namespace Tic_Tac_Toe_Tests
             _newBoard.UpdateBoard(new Location(3, 1), CellValue.O);
             _newBoard.UpdateBoard(new Location(3, 3), CellValue.X);
         
-            var result = Rule.DetermineWin(_newBoard, CellValue.X);
+            var result = _rule.DetermineWin(_newBoard, CellValue.X);
             
             Assert.True(result);
         }
@@ -86,7 +87,7 @@ namespace Tic_Tac_Toe_Tests
             _newBoard.UpdateBoard(new Location(3, 2), CellValue.X);
             _newBoard.UpdateBoard(new Location(1, 3), CellValue.O);
         
-            var result = Rule.DetermineWin(_newBoard, CellValue.O);
+            var result = _rule.DetermineWin(_newBoard, CellValue.O);
             
             Assert.True(result);
         }
@@ -100,7 +101,7 @@ namespace Tic_Tac_Toe_Tests
             _newBoard.UpdateBoard(new Location(3, 3), CellValue.X);
             _newBoard.UpdateBoard(new Location(3, 2), CellValue.O);
         
-            var result = Rule.DetermineWin(_newBoard, CellValue.O);
+            var result = _rule.DetermineWin(_newBoard, CellValue.O);
             
             Assert.False(result);
         }

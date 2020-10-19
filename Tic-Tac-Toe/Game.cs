@@ -1,4 +1,3 @@
-using System;
 using System.Text.RegularExpressions;
 
 namespace Tic_Tac_Toe
@@ -13,10 +12,12 @@ namespace Tic_Tac_Toe
         public GameState GameState { get; private set; }
 
         private readonly IInputOutput _iio;
+        private readonly IRule _rule;
 
-        public Game(IInputOutput iio, GameState gameState = GameState.Continue)
+        public Game(IInputOutput iio, IRule rule, GameState gameState = GameState.Continue)
         {
             _iio = iio;
+            _rule = rule;
             GameState = gameState;
             GameBoard = new Board(3);
             Player1 = new Player(CellValue.X, "Player 1");
@@ -39,7 +40,7 @@ namespace Tic_Tac_Toe
             _iio.Output("Here's the current board:");
         }
 
-        private GameState UpdateGameState()
+        private void UpdateGameState()
         {
             while (GameState == GameState.Continue)
             {
@@ -53,8 +54,6 @@ namespace Tic_Tac_Toe
                     _iio.Output("It is a draw!");
                 }
             }
-            
-            return GameState;
         }
 
         private void DetermineActionFromInput(string playerInput)
@@ -72,7 +71,7 @@ namespace Tic_Tac_Toe
                     GameBoard.UpdateBoard(newLocation, CurrentPlayer.CellValue);
                     _turn++;
                     _iio.Output(GameBoard);
-                    if (Rule.DetermineWin(GameBoard, CurrentPlayer.CellValue))
+                    if (_rule.DetermineWin(GameBoard, CurrentPlayer.CellValue))
                     {
                         _iio.Output($"The winner is {CurrentPlayer.Name}");
                         CurrentPlayer.IsWinner = true;

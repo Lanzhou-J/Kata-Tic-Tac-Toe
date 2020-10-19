@@ -5,11 +5,6 @@ namespace Tic_Tac_Toe
         public Location Position { get; private set; }
         public CellValue Value { get; set; }
 
-        public Cell()
-        {
-            Value = CellValue.Empty;
-        }
-        
         public Cell(Location position)
         {
             Position = position;

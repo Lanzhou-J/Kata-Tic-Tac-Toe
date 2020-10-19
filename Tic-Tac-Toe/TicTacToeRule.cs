@@ -4,19 +4,17 @@ using System.Linq;
 
 namespace Tic_Tac_Toe
 {
-    public static class Rule
+    public class TicTacToeRule:IRule
     {
         
-        public static Boolean DetermineWin(Board gameBoard, CellValue cellValue)
+        public Boolean DetermineWin(Board gameBoard, CellValue cellValue)
         {
             List<Cell> sameValueCells = gameBoard.Cells.FindAll(x => x.Value.Equals(cellValue));
             if (CheckRow(sameValueCells)||CheckColumn(sameValueCells)||CheckDiagonal(sameValueCells))
             {
                 return true;
-            }else
-            {
-                return false;
             }
+            return false;
         }
 
         private static Boolean CheckRow(List<Cell> cells)

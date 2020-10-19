@@ -1,4 +1,3 @@
-using System;
 namespace Tic_Tac_Toe
 {
     public class Player
@@ -6,8 +5,6 @@ namespace Tic_Tac_Toe
         public CellValue CellValue { get; private set; }
         public string Name { get; private set; }
 
-        // public bool IsCurrentPlayer { get; set; }
-        
         public bool IsWinner { get; set; }
 
         public Player(CellValue cellValue, string name)
@@ -15,7 +12,6 @@ namespace Tic_Tac_Toe
             CellValue = cellValue;
             Name = name;
             IsWinner = false;
-            // IsCurrentPlayer = false;
         }
     }
     

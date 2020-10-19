@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Tic_Tac_Toe
@@ -18,7 +17,7 @@ namespace Tic_Tac_Toe
                 {
                     Location newLocation = new Location(row, col);
                     Cell newCell = new Cell(newLocation);
-                    this.Cells.Add(newCell);                    
+                    Cells.Add(newCell);                    
                 }
             }
         }
@@ -40,8 +39,7 @@ namespace Tic_Tac_Toe
             
             return false;
         }
-
-        // validation and updateboard
+        
         public void UpdateBoard(Location location, CellValue cellValue)
         {
             int index = GetCellIndexBasedOnLocation(location);
@@ -49,13 +47,6 @@ namespace Tic_Tac_Toe
             {
                 Cells[index].Value = cellValue;
             }
-            // else
-            // {
-                // throw new ArgumentException($"{location} is not valid. The cell is not empty.",
-                //     nameof(location));
-                // Console.WriteLine("Oh no, a piece is already at this place! Try again...");
-                // return null;
-            // }
         }
     }
 }

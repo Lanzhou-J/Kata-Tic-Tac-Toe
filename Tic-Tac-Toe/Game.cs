@@ -1,41 +1,57 @@
 using System;
 using System.Text.RegularExpressions;
+
 namespace Tic_Tac_Toe
 {
     public class Game
     {
         private Player CurrentPlayer { get; set; }
-        private Player Player1 { get; set; }
-        private Player Player2 { get; set; }
-        private Board GameBoard { get; set; }
+        private Player Player1 { get; }
+        private Player Player2 { get; }
+        private Board GameBoard { get; }
 
-        public Game()
+        public GameState GameState { get; private set; }
+
+        private readonly IInputOutput _iio;
+
+        public Game(IInputOutput iio, GameState gameState = GameState.Continue)
         {
+            _iio = iio;
+            CurrentPlayer = null;
+            GameState = gameState;
             GameBoard = new Board(3);
             Player1 = new Player(CellValue.X, "Player 1");
             Player2 = new Player(CellValue.O, "Player 2");
-            CurrentPlayer = Player1;
         }
 
         public void Start()
         {
-            WelcomePlayer();
-            BoardOutput newBoardOutput = new BoardOutput(GameBoard);
-            newBoardOutput.Print();
-            TakeTurns();
+            try
+            {
+                WelcomePlayer();
+                _iio.Output(GameBoard);
+                TakeTurns();
+            }
+            catch (Exception e)
+            {
+                _iio.Output(e);
+            }
+
         }
 
         private void WelcomePlayer()
         {
-            Console.WriteLine("Welcome to Tic Tac Toe!");
-            Console.WriteLine("Here's the current board:");  
+            _iio.Output("Welcome to Tic Tac Toe!");
+            _iio.Output("Here's the current board:");
         }
+
+
 
         private void TakeTurns()
         {
             Board previousBoard = GameBoard;
             int turn = 1;
-            while (turn <= GameBoard.Size*GameBoard.Size)  
+            while (turn <= GameBoard.Size * GameBoard.Size)
             {
                 if (turn % 2 == 0)
                 {
@@ -45,60 +61,121 @@ namespace Tic_Tac_Toe
                 {
                     CurrentPlayer = Player1;
                 }
-                PlayerInput newInput = new PlayerInput();
-                string playerInput = newInput.CollectPlayerInput(CurrentPlayer.Name, CurrentPlayer.CellValue.ToString());
-                Board updatedBoard = SortInput(playerInput);
+
+                string playerInput = _iio.CollectPlayerInput(CurrentPlayer);
+                Board updatedBoard = DetermineActionFromInput(playerInput);
+                // Compare objects;
                 if (updatedBoard != null)
                 {
                     turn++;
+                    _iio.Output(updatedBoard);
+                    if (Rule.DetermineWin(updatedBoard, CurrentPlayer.CellValue))
+                    {
+                        _iio.Output($"The winner is {CurrentPlayer.Name}");
+                        Environment.Exit(1);
+                    }
                 }
                 else
                 {
                     updatedBoard = previousBoard;
                 }
-                BoardOutput newBoardOutput = new BoardOutput(updatedBoard);
-                newBoardOutput.Print();
+
                 previousBoard = updatedBoard;
+                if (turn > 9)
+                {
+                    _iio.Output("It is a draw!");
+                }
             }
         }
-        private dynamic SortInput(string playerInput)
+
+        private Board DetermineActionFromInput(string playerInput)
         {
-            string pattern = @"^[1-3],[1-3]$";
+
+            string pattern = $@"^[1-{GameBoard.Size}],[1-{GameBoard.Size}]$";
             if (playerInput == "q")
             {
                 QuitGame(CurrentPlayer.Name);
-            }else if (Regex.IsMatch(playerInput, pattern))
+            }
+            else if (Regex.IsMatch(playerInput, pattern))
             {
-                Coord newCoord = CreateCoord(playerInput);
-                Board updatedBoard = GameBoard.UpdateBoard(newCoord, CurrentPlayer.CellValue);
+                Location newLocation = CreateLocation(playerInput);
+                Board updatedBoard = GameBoard.UpdateBoard(newLocation, CurrentPlayer.CellValue);
                 return updatedBoard;
             }
             else
             {
-                Console.WriteLine("It is not a valid input.");
+                // throw new ArgumentException($"The input: {playerInput} is not valid.",
+                //     nameof(playerInput));
+                _iio.Output("It is not a valid input.");
                 return null;
             }
 
             return null;
         }
 
+        // private IAction DetermineActionFromUserInput(string playerInput)
+        // {
+        //     if (playerInput == "q")
+        //     {
+        //         return new QuitAction();
+        //     }
+        //
+        //     throw new InvalidEnumArgumentException();
+        // }
+        //
+        // public void Play()
+        // {
+        //     //...
+        //     try
+        //     {
+        //         var action = DetermineActionFromInput("");
+        //         action.Act();
+        //     }
+        //     catch (InvalidEnumArgumentException e)
+        //     {
+        //         Console.WriteLine(e);
+        //     }
+        // }
+
         private void QuitGame(string player)
         {
-            Console.WriteLine($"{player} quit the game.");
+            _iio.Output($"{player} quit the game.");
             Environment.Exit(1);
         }
 
-        private Coord CreateCoord(string coordInput)
+        private Location CreateLocation(string locationInput)
         {
-            char xValue = coordInput[0];
-            char yValue = coordInput[2];
-            int coordX = (int) (xValue - '0');
-            int coordY = (int) (yValue - '0');
-            Coord newCoord = new Coord(coordX, coordY);
-            return newCoord;
+            char xValue = locationInput[0];
+            char yValue = locationInput[2];
+            int locationX = xValue - '0';
+            int locationY = yValue - '0';
+            Location newLocation = new Location(locationX, locationY);
+            return newLocation;
         }
-
-
-
     }
 }
+
+
+
+//     internal interface IAction
+//     {
+//         void Act();
+//     }
+//     
+//     public class QuitAction : IAction
+//     {
+//         public void Act()
+//         {
+//             Console.WriteLine("quit the game.");
+//             Environment.Exit(1);
+//         }
+//     }
+//     
+//     public class MoveAction : IAction
+//     {
+//         public void Act()
+//         {
+//             //update board
+//         }
+//     }
+// }

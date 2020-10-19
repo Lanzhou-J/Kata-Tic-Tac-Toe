@@ -1,10 +1,8 @@
-using System;
-
 namespace Tic_Tac_Toe
 {
     public class Cell
     {
-        public Coord Position { get; set; }
+        public Location Position { get; private set; }
         public CellValue Value { get; set; }
 
         public Cell()
@@ -12,13 +10,13 @@ namespace Tic_Tac_Toe
             Value = CellValue.Empty;
         }
         
-        public Cell(Coord position)
+        public Cell(Location position)
         {
             Position = position;
             Value = CellValue.Empty;
         }
 
-        public Cell (Coord position, CellValue cellValue)
+        public Cell (Location position, CellValue cellValue)
         {
             Position = position;
             Value = cellValue;

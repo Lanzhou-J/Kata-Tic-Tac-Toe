@@ -66,7 +66,26 @@ namespace Tic_Tac_Toe_Tests
             
             Assert.Equal(rowValue,newBoard.Cells[index].Position.RowValueX );
         }
+
+        [Fact]
+        public void LocationCellIsEmptyShould_ReturnTrue_WhenTheLocationCellIsEmpty()
+        {
+            int boardSize = 3;
+            Board newBoard = new Board(boardSize);
+            Location newLocation = new Location(3,1);
+            Assert.True(newBoard.LocationCellIsEmpty(newLocation));
+        }
         
+        [Fact]
+        public void LocationCellIsEmptyShould_ReturnFalse_WhenTheLocationCellIsNotEmpty()
+        {
+            int boardSize = 3;
+            Board newBoard = new Board(boardSize);
+            Location newLocation = new Location(3,1);
+            newBoard.UpdateBoard(newLocation, CellValue.X);
+            Assert.False(newBoard.LocationCellIsEmpty(newLocation));
+        }
+
         [Fact]
         public void UpdateBoard_WhenInputIsXAndValidCoord_ShouldUpdateBoard()
         {

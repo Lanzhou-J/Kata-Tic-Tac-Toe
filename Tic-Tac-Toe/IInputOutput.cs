@@ -11,7 +11,5 @@ namespace Tic_Tac_Toe
         void Output(string message);
 
         void Output(Board board);
-        
-        void Output(Exception exception);
     }
 }

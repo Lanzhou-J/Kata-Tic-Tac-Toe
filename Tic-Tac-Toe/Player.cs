@@ -2,8 +2,8 @@ namespace Tic_Tac_Toe
 {
     public class Player
     {
-        public CellValue CellValue { get; private set; }
-        public string Name { get; private set; }
+        public CellValue CellValue { get; }
+        public string Name { get; }
 
         public bool IsWinner { get; set; }
 

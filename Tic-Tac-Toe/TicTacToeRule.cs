@@ -64,10 +64,8 @@ namespace Tic_Tac_Toe
             {
                 return true;
             }
-            else
-            {
-                return false; 
-            }
+
+            return false;
         }
     }
 }

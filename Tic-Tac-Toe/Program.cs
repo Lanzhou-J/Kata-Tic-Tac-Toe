@@ -12,8 +12,8 @@
         static void Main()
         {
             var console = new ConsoleInputOutput();
-            var blackJackrule = new TicTacToeRule();
-            var newGame = new Game(console, blackJackrule);
+            var ticTacToeRule = new TicTacToeRule();
+            var newGame = new Game(console, ticTacToeRule);
             newGame.Play();
         }
     }

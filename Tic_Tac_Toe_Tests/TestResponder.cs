@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Tic_Tac_Toe;
 
@@ -32,10 +31,6 @@ namespace Tic_Tac_Toe_Tests
         }
 
         public void Output(Board board)
-        {
-        }
-
-        public void Output(Exception exception)
         {
         }
     }

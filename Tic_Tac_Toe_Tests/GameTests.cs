@@ -6,7 +6,7 @@ namespace Tic_Tac_Toe_Tests
     public class GameTests
     {
         private const string QuitResponse = "q";
-        private TicTacToeRule _rule = new TicTacToeRule();
+        private readonly TicTacToeRule _rule = new TicTacToeRule();
 
         [Fact]
             public void PlayShould_ChangeGameStateQuit_WhenUserInputQ()

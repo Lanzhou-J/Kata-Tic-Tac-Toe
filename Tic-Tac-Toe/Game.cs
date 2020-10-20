@@ -29,8 +29,8 @@ namespace Tic_Tac_Toe
         public void Play()
         {
             WelcomePlayer();
-            _iio.Output(GameBoard);
-            UpdateGameState();
+            OutputInitialBoard();
+            PlayersTakeTurnsToPlay();
         }
         
         private void WelcomePlayer()
@@ -38,8 +38,11 @@ namespace Tic_Tac_Toe
             _iio.Output("Welcome to Tic Tac Toe!");
             _iio.Output("Here's the current board:");
         }
-
-        private void UpdateGameState()
+        private void OutputInitialBoard()
+        {
+            _iio.Output(GameBoard);
+        }
+        private void PlayersTakeTurnsToPlay()
         {
             while (GameState == GameState.Continue)
             {

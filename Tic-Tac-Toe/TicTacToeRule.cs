@@ -6,44 +6,31 @@ namespace Tic_Tac_Toe
 {
     public class TicTacToeRule:IRule
     {
-        
-        public Boolean DetermineWin(Board gameBoard, CellValue cellValue)
+        private const int WinCount = 3;   
+        public bool DetermineWin(Board gameBoard, CellValue cellValue)
         {
-            List<Cell> sameValueCells = gameBoard.Cells.FindAll(x => x.Value.Equals(cellValue));
-            if (CheckRow(sameValueCells)||CheckColumn(sameValueCells)||CheckDiagonal(sameValueCells))
-            {
-                return true;
-            }
-            return false;
+            var sameValueCells = gameBoard.Cells.FindAll(x => x.Value.Equals(cellValue));
+            return CheckRow(sameValueCells)||CheckColumn(sameValueCells)||CheckDiagonal(sameValueCells);
         }
 
-        private static Boolean CheckRow(List<Cell> cells)
+        private static bool CheckRow(IEnumerable<Cell> cells)
         {
-            List<int> rowValueXs = new List<int>();
-            foreach (var cell in cells)
-            {
-                rowValueXs.Add(cell.Position.RowValueX);
-            }
+            var rowValueXs = cells.Select(cell => cell.Position.RowValueX).ToList();
             rowValueXs.Sort();
-            int winCount = 3;
-            var count = rowValueXs.GroupBy(item => item).Where(item => item.Count() >= winCount).Sum(item=> item.Count());
-            return count == winCount;
+            
+            var count = rowValueXs.GroupBy(item => item).Where(item => item.Count() >= WinCount).Sum(item=> item.Count());
+            return count == WinCount;
         }
         
-        private static Boolean CheckColumn(List<Cell> cells)
+        private static bool CheckColumn(IEnumerable<Cell> cells)
         {
-            List<int> columnValueYs = new List<int>();
-            foreach (var cell in cells)
-            {
-                columnValueYs.Add(cell.Position.ColumnValueY);
-            }
+            var columnValueYs = cells.Select(cell => cell.Position.ColumnValueY).ToList();
             columnValueYs.Sort();
-            int winCount = 3;
-            var count = columnValueYs.GroupBy(item => item).Where(item => item.Count() >= winCount).Sum(item=> item.Count());
-            return count == winCount;
+            var count = columnValueYs.GroupBy(item => item).Where(item => item.Count() >= WinCount).Sum(item=> item.Count());
+            return count == WinCount;
         }
 
-        private static Boolean CheckDiagonal(List<Cell> cells)
+        private static bool CheckDiagonal(IEnumerable<Cell> cells)
         {
             var topLeftToBottomRightCount = 0;
             var bottomLeftToTopRightCount = 0;
@@ -57,15 +44,8 @@ namespace Tic_Tac_Toe
                 {
                     bottomLeftToTopRightCount++;
                 }
-
             }
-
-            if (topLeftToBottomRightCount == 3 || bottomLeftToTopRightCount==3)
-            {
-                return true;
-            }
-
-            return false;
+            return topLeftToBottomRightCount == WinCount || bottomLeftToTopRightCount == WinCount;
         }
     }
 }

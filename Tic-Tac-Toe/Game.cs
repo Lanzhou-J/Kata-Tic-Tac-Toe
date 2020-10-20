@@ -28,18 +28,18 @@ namespace Tic_Tac_Toe
         
         public void Play()
         {
-            WelcomePlayer();
-            OutputInitialBoard();
+            WelcomePlayers();
+            OutputBoard();
             PlayersTakeTurnsToPlay();
         }
         
-        private void WelcomePlayer()
+        private void WelcomePlayers()
         {
             _iio.Output("Welcome to Tic Tac Toe!");
-            _iio.Output("Here's the current board:");
         }
-        private void OutputInitialBoard()
+        private void OutputBoard()
         {
+            _iio.Output("Here's the current board:");
             _iio.Output(GameBoard);
         }
         private void PlayersTakeTurnsToPlay()
@@ -59,38 +59,44 @@ namespace Tic_Tac_Toe
         
         private void DetermineActionFromInput(string playerInput)
         {
-            var locationStringPattern = $@"^[1-{GameBoard.Size}],[1-{GameBoard.Size}]$";
-            if (playerInput == QuitResponse)
+            if (PlayerInputMatchesQuitResponse(playerInput))
             {
                 QuitGame();
-            }else if (PlayerInputMatchesLocationStringPattern(playerInput, locationStringPattern))
+            }else if (PlayerInputMatchesLocationStringPattern(playerInput))
             {
                 var newLocation = CreateLocationBasedOnLocationInput(playerInput);
                 if (GameBoard.LocationCellIsEmpty(newLocation))
                 {
-                    MakeAMove(newLocation);
+                    CurrentPlayerMakeAMove(newLocation);
+                    OutputBoard();
                     CheckWinner();
                 }
                 else
                 {
-                    _iio.Output("Oh no, a piece is already at this place! Try again...");
+                    RemindPlayerLocationCellIsTaken();
                 }
             }
             else
             {
-                _iio.Output("It is not a valid input.");
+                RemindPlayerInputIsNotValid();
             }
         }
-        
+
+        private static bool PlayerInputMatchesQuitResponse(string playerInput)
+        {
+            return playerInput == QuitResponse;
+        }
+
         private void QuitGame()
         {
             _iio.Output($"{CurrentPlayer.Name} quit the game.");
             GameState = GameState.Quit;
         }
         
-        private static bool PlayerInputMatchesLocationStringPattern(string playerInput, string locationPattern)
+        private bool PlayerInputMatchesLocationStringPattern(string playerInput)
         {
-            return Regex.IsMatch(playerInput, locationPattern);
+            var locationStringPattern = $@"^[1-{GameBoard.Size}],[1-{GameBoard.Size}]$";
+            return Regex.IsMatch(playerInput, locationStringPattern);
         }
         private static Location CreateLocationBasedOnLocationInput(string locationInput)
         {
@@ -101,11 +107,10 @@ namespace Tic_Tac_Toe
             var newLocation = new Location(locationX, locationY);
             return newLocation;
         }
-        private void MakeAMove(Location newLocation)
+        private void CurrentPlayerMakeAMove(Location newLocation)
         {
             GameBoard.UpdateBoard(newLocation, CurrentPlayer.CellValue);
             _turn++;
-            _iio.Output(GameBoard);
         }
         private void CheckWinner()
         {
@@ -116,7 +121,15 @@ namespace Tic_Tac_Toe
                 GameState = GameState.PlayerWon;
             }
         }
-
+        private void RemindPlayerLocationCellIsTaken()
+        {
+            _iio.Output("Oh no, a piece is already at this place! Try again...");
+        }
+        private void RemindPlayerInputIsNotValid()
+        {
+            _iio.Output("It is not a valid input.");
+        }
+        
         private void DetermineIfItIsADraw()
         {
             if (_turn <= GameBoard.Size * GameBoard.Size) return;

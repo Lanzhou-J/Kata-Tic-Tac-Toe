@@ -4,16 +4,16 @@ namespace Tic_Tac_Toe
 {
     public class Game
     {
+        private int _turn = 1;
+        private readonly IInputOutput _iio;
+        private readonly IRule _rule;
         private Player CurrentPlayer { get; set; }
         private Player Player1 { get; }
         private Player Player2 { get; }
         private Board GameBoard { get; }
 
         public GameState GameState { get; private set; }
-
-        private readonly IInputOutput _iio;
-        private readonly IRule _rule;
-
+        
         public Game(IInputOutput iio, IRule rule, Player player1, Player player2, GameState gameState = GameState.Continue)
         {
             _iio = iio;
@@ -24,9 +24,7 @@ namespace Tic_Tac_Toe
             Player2 = player2;
             CurrentPlayer = Player1;
         }
-
-        private int _turn = 1;
-
+        
         public void Play()
         {
             WelcomePlayer();
@@ -44,16 +42,19 @@ namespace Tic_Tac_Toe
         {
             while (GameState == GameState.Continue)
             {
-                CurrentPlayer = _turn % 2 == 0 ? Player2 : Player1;
-                string playerInput = _iio.CollectPlayerInput(CurrentPlayer);
+                DetermineWhoIsCurrentPlayer();
+                var playerInput = _iio.CollectPlayerInput(CurrentPlayer);
                 DetermineActionFromInput(playerInput);
-                
-                if (_turn > GameBoard.Size * GameBoard.Size)
-                {
-                    GameState = GameState.Draw;
-                    _iio.Output("It is a draw!");
-                }
+
+                if (_turn <= GameBoard.Size * GameBoard.Size) continue;
+                GameState = GameState.Draw;
+                _iio.Output("It is a draw!");
             }
+        }
+
+        private void DetermineWhoIsCurrentPlayer()
+        {
+            CurrentPlayer = _turn % 2 == 0 ? Player2 : Player1;
         }
 
         private void DetermineActionFromInput(string playerInput)

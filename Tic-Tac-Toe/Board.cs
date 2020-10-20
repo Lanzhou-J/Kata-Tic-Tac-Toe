@@ -11,42 +11,41 @@ namespace Tic_Tac_Toe
         {
             Size = size;
             Cells = new List<Cell>();
-            for (int row = 1; row <= Size; row++)
+            AddNewCellToCells();
+        }
+
+        private void AddNewCellToCells()
+        {
+            for (var row = 1; row <= Size; row++)
             {
-                for (int col = 1; col <= Size; col++)
+                for (var col = 1; col <= Size; col++)
                 {
-                    Location newLocation = new Location(row, col);
-                    Cell newCell = new Cell(newLocation);
-                    Cells.Add(newCell);                    
+                    var newLocation = new Location(row, col);
+                    var newCell = new Cell(newLocation);
+                    Cells.Add(newCell);
                 }
             }
         }
 
-        private int GetCellIndexBasedOnLocation(Location location)
-        {
-            int index = Size * (location.RowValueX - 1) + (location.ColumnValueY - 1);
-            return index;
-        }
-
         public bool LocationCellIsEmpty(Location location)
         {
-            int index = GetCellIndexBasedOnLocation(location);
-            
-            if (Cells[index].Value == CellValue.Empty)
-            {
-                return true;
-            }
-            
-            return false;
+            var index = GetCellIndexBasedOnLocation(location);
+            return Cells[index].Value == CellValue.Empty;
         }
         
         public void UpdateBoard(Location location, CellValue cellValue)
         {
-            int index = GetCellIndexBasedOnLocation(location);
+            var index = GetCellIndexBasedOnLocation(location);
             if (LocationCellIsEmpty(location))
             {
                 Cells[index].Value = cellValue;
             }
+        }
+        
+        private int GetCellIndexBasedOnLocation(Location location)
+        {
+            var index = Size * (location.RowValueX - 1) + (location.ColumnValueY - 1);
+            return index;
         }
     }
 }

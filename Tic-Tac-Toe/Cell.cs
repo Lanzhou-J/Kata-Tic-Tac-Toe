@@ -19,17 +19,12 @@ namespace Tic_Tac_Toe
 
         public string DisplayCellValue()
         {
-            if (Value == CellValue.X)
+            return Value switch
             {
-                return "X";
-            }else if (Value == CellValue.O)
-            {
-                return "O";
-            }
-            else
-            {
-                return ".";
-            }
+                CellValue.X => "X",
+                CellValue.O => "O",
+                _ => "."
+            };
         }
 
     }

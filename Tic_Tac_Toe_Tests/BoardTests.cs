@@ -44,7 +44,7 @@ namespace Tic_Tac_Toe_Tests
                 columnValue = size;
             }
 
-            Assert.Equal(columnValue,newBoard.Cells[index].Position.ColumnValueY );
+            Assert.Equal(columnValue,newBoard.Cells[index].Location.Column );
         }
         
         [Theory]
@@ -64,7 +64,7 @@ namespace Tic_Tac_Toe_Tests
                 rowValue =  (index + 1) / size + 1;
             }
             
-            Assert.Equal(rowValue,newBoard.Cells[index].Position.RowValueX );
+            Assert.Equal(rowValue,newBoard.Cells[index].Location.Row );
         }
 
         [Fact]
@@ -82,7 +82,7 @@ namespace Tic_Tac_Toe_Tests
             int boardSize = 3;
             Board newBoard = new Board(boardSize);
             Location newLocation = new Location(3,1);
-            newBoard.UpdateBoard(newLocation, CellValue.X);
+            newBoard.UpdateBoard(newLocation, Piece.X);
             Assert.False(newBoard.LocationCellIsEmpty(newLocation));
         }
 
@@ -92,9 +92,9 @@ namespace Tic_Tac_Toe_Tests
             int boardSize = 3;
             Board newBoard = new Board(boardSize);
             Location newLocation = new Location(3,1);
-            newBoard.UpdateBoard(newLocation, CellValue.X);
+            newBoard.UpdateBoard(newLocation, Piece.X);
 
-            List<CellValue> cellValues = new List<CellValue> {CellValue.Empty, CellValue.Empty, CellValue.Empty, CellValue.Empty, CellValue.Empty, CellValue.Empty, CellValue.X, CellValue.Empty, CellValue.Empty};
+            List<Piece> cellValues = new List<Piece> {Piece.None, Piece.None, Piece.None, Piece.None, Piece.None, Piece.None, Piece.X, Piece.None, Piece.None};
             int index = 0;
             foreach (var cell in newBoard.Cells)
             {

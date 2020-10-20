@@ -7,8 +7,8 @@ namespace Tic_Tac_Toe_Tests
     {
         private const string QuitResponse = "q";
         private readonly TicTacToeRule _rule = new TicTacToeRule();
-        private readonly Player _player1 = new Player(CellValue.X, "Player 1");
-        private readonly Player _player2 = new Player(CellValue.O, "Player 2");
+        private readonly Player _player1 = new Player(Piece.X, "Player 1");
+        private readonly Player _player2 = new Player(Piece.O, "Player 2");
 
         [Fact]
             public void PlayShould_ChangeGameStateToQuit_WhenUserInputQ()

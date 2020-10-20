@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,45 +6,77 @@ namespace Tic_Tac_Toe
     public class TicTacToeRule:IRule
     {
         private const int WinCount = 3;   
-        public bool DetermineWin(Board gameBoard, CellValue cellValue)
+        public bool DetermineWin(Board gameBoard, Piece piece)
         {
-            var sameValueCells = gameBoard.Cells.FindAll(x => x.Value.Equals(cellValue));
-            return CheckRow(sameValueCells)||CheckColumn(sameValueCells)||CheckDiagonal(sameValueCells);
+            var samePieceCells = GetSamePieceCellsOnGameBoard(gameBoard, piece);
+            return OnTheSameRow(samePieceCells)||OnTheSameColumn(samePieceCells)||OnTheSameDiagonal(samePieceCells);
         }
 
-        private static bool CheckRow(IEnumerable<Cell> cells)
+        private static List<Cell> GetSamePieceCellsOnGameBoard(Board gameBoard, Piece piece)
         {
-            var rowValueXs = cells.Select(cell => cell.Position.RowValueX).ToList();
-            rowValueXs.Sort();
+            var samePieceCells = gameBoard.Cells.FindAll(x => x.Value.Equals(piece));
+            return samePieceCells;
+        }
+
+        private static bool OnTheSameRow(IEnumerable<Cell> cells)
+        {
+            var rowValues = GetRowValuesOfSamePieceCells(cells);
+            rowValues.Sort();
             
-            var count = rowValueXs.GroupBy(item => item).Where(item => item.Count() >= WinCount).Sum(item=> item.Count());
-            return count == WinCount;
+            return DetermineIfSameValueItemsCountIsEqualToWinCount(rowValues);
         }
-        
-        private static bool CheckColumn(IEnumerable<Cell> cells)
+
+        private static bool DetermineIfSameValueItemsCountIsEqualToWinCount(List<int> values)
         {
-            var columnValueYs = cells.Select(cell => cell.Position.ColumnValueY).ToList();
-            columnValueYs.Sort();
-            var count = columnValueYs.GroupBy(item => item).Where(item => item.Count() >= WinCount).Sum(item=> item.Count());
+            var count = values.GroupBy(item => item).Where(item => item.Count() >= WinCount).Sum(item => item.Count());
             return count == WinCount;
         }
 
-        private static bool CheckDiagonal(IEnumerable<Cell> cells)
+        private static List<int> GetRowValuesOfSamePieceCells(IEnumerable<Cell> cells)
+        {
+            var rowValues = cells.Select(cell => cell.Location.Row).ToList();
+            return rowValues;
+        }
+
+        private static bool OnTheSameColumn(IEnumerable<Cell> cells)
+        {
+            var columnValues = GetColumnValues(cells);
+            columnValues.Sort();
+            return DetermineIfSameValueItemsCountIsEqualToWinCount(columnValues);
+        }
+
+        private static List<int> GetColumnValues(IEnumerable<Cell> cells)
+        {
+            var columnValues = cells.Select(cell => cell.Location.Column).ToList();
+            return columnValues;
+        }
+
+        private static bool OnTheSameDiagonal(IEnumerable<Cell> cells)
         {
             var topLeftToBottomRightCount = 0;
             var bottomLeftToTopRightCount = 0;
             foreach (var cell in cells)
             {
-                if (cell.Position.ColumnValueY == cell.Position.RowValueX)
+                if (OnTopLeftToBottomRightDiagonal(cell))
                 {
                     topLeftToBottomRightCount++;
                 }
-                if (cell.Position.ColumnValueY + cell.Position.RowValueX == 4)
+                if (OnBottomLeftToTopRightDiagonal(cell))
                 {
                     bottomLeftToTopRightCount++;
                 }
             }
             return topLeftToBottomRightCount == WinCount || bottomLeftToTopRightCount == WinCount;
+        }
+
+        private static bool OnBottomLeftToTopRightDiagonal(Cell cell)
+        {
+            return cell.Location.Column + cell.Location.Row == 4;
+        }
+
+        private static bool OnTopLeftToBottomRightDiagonal(Cell cell)
+        {
+            return cell.Location.Column == cell.Location.Row;
         }
     }
 }

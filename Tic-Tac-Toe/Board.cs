@@ -30,21 +30,21 @@ namespace Tic_Tac_Toe
         public bool LocationCellIsEmpty(Location location)
         {
             var index = GetCellIndexBasedOnLocation(location);
-            return Cells[index].Value == CellValue.Empty;
+            return Cells[index].Value == Piece.None;
         }
         
-        public void UpdateBoard(Location location, CellValue cellValue)
+        public void UpdateBoard(Location location, Piece piece)
         {
             var index = GetCellIndexBasedOnLocation(location);
             if (LocationCellIsEmpty(location))
             {
-                Cells[index].Value = cellValue;
+                Cells[index].Value = piece;
             }
         }
         
         private int GetCellIndexBasedOnLocation(Location location)
         {
-            var index = Size * (location.RowValueX - 1) + (location.ColumnValueY - 1);
+            var index = Size * (location.Row - 1) + (location.Column - 1);
             return index;
         }
     }

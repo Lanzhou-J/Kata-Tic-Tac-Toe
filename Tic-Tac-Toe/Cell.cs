@@ -2,27 +2,27 @@ namespace Tic_Tac_Toe
 {
     public class Cell
     {
-        public Location Position { get; }
-        public CellValue Value { get; set; }
+        public Location Location { get; }
+        public Piece Value { get; set; }
 
-        public Cell(Location position)
+        public Cell(Location location)
         {
-            Position = position;
-            Value = CellValue.Empty;
+            Location = location;
+            Value = Piece.None;
         }
 
-        public Cell (Location position, CellValue cellValue)
+        public Cell (Location location, Piece piece)
         {
-            Position = position;
-            Value = cellValue;
+            Location = location;
+            Value = piece;
         }
 
         public string DisplayCellValue()
         {
             return Value switch
             {
-                CellValue.X => "X",
-                CellValue.O => "O",
+                Piece.X => "X",
+                Piece.O => "O",
                 _ => "."
             };
         }

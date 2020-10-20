@@ -109,12 +109,12 @@ namespace Tic_Tac_Toe
         }
         private void CurrentPlayerMakeAMove(Location newLocation)
         {
-            GameBoard.UpdateBoard(newLocation, CurrentPlayer.CellValue);
+            GameBoard.UpdateBoard(newLocation, CurrentPlayer.Piece);
             _turn++;
         }
         private void CheckWinner()
         {
-            if (_rule.DetermineWin(GameBoard, CurrentPlayer.CellValue))
+            if (_rule.DetermineWin(GameBoard, CurrentPlayer.Piece))
             {
                 _iio.Output($"The winner is {CurrentPlayer.Name}");
                 CurrentPlayer.IsWinner = true;

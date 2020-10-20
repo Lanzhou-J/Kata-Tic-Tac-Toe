@@ -21,7 +21,7 @@ namespace Tic_Tac_Toe_Tests
 
         public string CollectPlayerInput(Player player)
         {
-            var instruction = $"{player.Name} enter a coord x,y to place your {player.CellValue} or enter 'q' to give up: ";
+            var instruction = $"{player.Name} enter a coord x,y to place your {player.Piece} or enter 'q' to give up: ";
             var input = Ask(instruction);
             return input;
         }

@@ -4,6 +4,7 @@ namespace Tic_Tac_Toe
 {
     public class Game
     {
+        private const string QuitResponse = "q";
         private int _turn = 1;
         private readonly IInputOutput _iio;
         private readonly IRule _rule;
@@ -45,39 +46,27 @@ namespace Tic_Tac_Toe
                 DetermineWhoIsCurrentPlayer();
                 var playerInput = _iio.CollectPlayerInput(CurrentPlayer);
                 DetermineActionFromInput(playerInput);
-
-                if (_turn <= GameBoard.Size * GameBoard.Size) continue;
-                GameState = GameState.Draw;
-                _iio.Output("It is a draw!");
+                DetermineIfItIsADraw();
             }
         }
-
         private void DetermineWhoIsCurrentPlayer()
         {
             CurrentPlayer = _turn % 2 == 0 ? Player2 : Player1;
         }
-
+        
         private void DetermineActionFromInput(string playerInput)
         {
-            string pattern = $@"^[1-{GameBoard.Size}],[1-{GameBoard.Size}]$";
-            if (playerInput == "q")
+            var locationStringPattern = $@"^[1-{GameBoard.Size}],[1-{GameBoard.Size}]$";
+            if (playerInput == QuitResponse)
             {
-                _iio.Output($"{CurrentPlayer.Name} quit the game.");
-                GameState = GameState.Quit;
-            }else if (Regex.IsMatch(playerInput, pattern))
+                QuitGame();
+            }else if (PlayerInputMatchesLocationStringPattern(playerInput, locationStringPattern))
             {
-                Location newLocation = CreateLocation(playerInput);
+                var newLocation = CreateLocationBasedOnLocationInput(playerInput);
                 if (GameBoard.LocationCellIsEmpty(newLocation))
                 {
-                    GameBoard.UpdateBoard(newLocation, CurrentPlayer.CellValue);
-                    _turn++;
-                    _iio.Output(GameBoard);
-                    if (_rule.DetermineWin(GameBoard, CurrentPlayer.CellValue))
-                    {
-                        _iio.Output($"The winner is {CurrentPlayer.Name}");
-                        CurrentPlayer.IsWinner = true;
-                        GameState = GameState.PlayerWon;
-                    }
+                    MakeAMove(newLocation);
+                    CheckWinner();
                 }
                 else
                 {
@@ -89,14 +78,47 @@ namespace Tic_Tac_Toe
                 _iio.Output("It is not a valid input.");
             }
         }
-        private Location CreateLocation(string locationInput)
+        
+        private void QuitGame()
         {
-            char xValue = locationInput[0];
-            char yValue = locationInput[2];
-            int locationX = xValue - '0';
-            int locationY = yValue - '0';
-            Location newLocation = new Location(locationX, locationY);
+            _iio.Output($"{CurrentPlayer.Name} quit the game.");
+            GameState = GameState.Quit;
+        }
+        
+        private static bool PlayerInputMatchesLocationStringPattern(string playerInput, string locationPattern)
+        {
+            return Regex.IsMatch(playerInput, locationPattern);
+        }
+        private static Location CreateLocationBasedOnLocationInput(string locationInput)
+        {
+            var xValue = locationInput[0];
+            var yValue = locationInput[2];
+            var locationX = xValue - '0';
+            var locationY = yValue - '0';
+            var newLocation = new Location(locationX, locationY);
             return newLocation;
+        }
+        private void MakeAMove(Location newLocation)
+        {
+            GameBoard.UpdateBoard(newLocation, CurrentPlayer.CellValue);
+            _turn++;
+            _iio.Output(GameBoard);
+        }
+        private void CheckWinner()
+        {
+            if (_rule.DetermineWin(GameBoard, CurrentPlayer.CellValue))
+            {
+                _iio.Output($"The winner is {CurrentPlayer.Name}");
+                CurrentPlayer.IsWinner = true;
+                GameState = GameState.PlayerWon;
+            }
+        }
+
+        private void DetermineIfItIsADraw()
+        {
+            if (_turn <= GameBoard.Size * GameBoard.Size) return;
+            GameState = GameState.Draw;
+            _iio.Output("It is a draw!");
         }
     }
 }

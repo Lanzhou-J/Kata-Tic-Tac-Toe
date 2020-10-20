@@ -5,7 +5,7 @@ namespace Tic_Tac_Toe
     public class Game
     {
         private const string QuitResponse = "q";
-        private int _turn = 1;
+        private int _turn;
         private readonly IInputOutput _iio;
         private readonly IRule _rule;
         private Player CurrentPlayer { get; set; }

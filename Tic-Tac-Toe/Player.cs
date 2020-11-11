@@ -1,18 +1,17 @@
-using System;
 namespace Tic_Tac_Toe
 {
     public class Player
     {
-        public CellValue CellValue { get; private set; }
-        public string Name { get; private set; }
+        public Piece Piece { get; }
+        public string Name { get; }
 
-        // public bool IsCurrentPlayer { get; set; }
+        public bool IsWinner { get; set; }
 
-        public Player(CellValue cellValue, string name)
+        public Player(Piece piece, string name)
         {
-            CellValue = cellValue;
+            Piece = piece;
             Name = name;
-            // IsCurrentPlayer = false;
+            IsWinner = false;
         }
     }
     

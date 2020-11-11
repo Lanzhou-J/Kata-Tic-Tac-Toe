@@ -5,6 +5,6 @@ namespace Tic_Tac_Toe
         Continue,
         PlayerWon,
         Draw,
-        End
+        Quit
     }
 }

@@ -1,59 +1,51 @@
-using System;
 using System.Collections.Generic;
 
 namespace Tic_Tac_Toe
 {
     public class Board
     {
-        public int Size { get; private set; }
-        public List<Cell> Cells { get; private set; }
+        public int Size { get; }
+        public List<Cell> Cells { get; }
 
         public Board(int size)
         {
             Size = size;
             Cells = new List<Cell>();
-            for (int row = 1; row <= Size; row++)
+            AddNewCellToCells();
+        }
+
+        private void AddNewCellToCells()
+        {
+            for (var row = 1; row <= Size; row++)
             {
-                for (int col = 1; col <= Size; col++)
+                for (var col = 1; col <= Size; col++)
                 {
-                    Location newLocation = new Location(row, col);
-                    Cell newCell = new Cell(newLocation);
-                    this.Cells.Add(newCell);                    
+                    var newLocation = new Location(row, col);
+                    var newCell = new Cell(newLocation);
+                    Cells.Add(newCell);
                 }
             }
         }
 
-        // private bool ValidateLocation(Location location, CellValue cellValue)
-        // {
-        //     int index = this.Size * (location.RowValueX - 1) + (location.ColumnValueY - 1);
-        //     if (this.Cells[index].Value == CellValue.Empty)
-        //     {
-        //         this.Cells[index].Value = cellValue;
-        //         return this;
-        //     }
-        //     else
-        //     {
-        //     }
-        //
-        //     return true;
-        // }
-
-        // validation and updateboard
-        public Board UpdateBoard(Location location, CellValue cellValue)
+        public bool LocationCellIsEmpty(Location location)
         {
-            int index = this.Size * (location.RowValueX - 1) + (location.ColumnValueY - 1);
-            if (this.Cells[index].Value == CellValue.Empty)
+            var index = GetCellIndexBasedOnLocation(location);
+            return Cells[index].Value == Piece.None;
+        }
+        
+        public void UpdateBoard(Location location, Piece piece)
+        {
+            var index = GetCellIndexBasedOnLocation(location);
+            if (LocationCellIsEmpty(location))
             {
-                this.Cells[index].Value = cellValue;
-                return this;
+                Cells[index].Value = piece;
             }
-            else
-            {
-                // throw new ArgumentException($"{location} is not valid. The cell is not empty.",
-                //     nameof(location));
-                Console.WriteLine("Oh no, a piece is already at this place! Try again...");
-                return null;
-            }
+        }
+        
+        private int GetCellIndexBasedOnLocation(Location location)
+        {
+            var index = Size * (location.Row - 1) + (location.Column - 1);
+            return index;
         }
     }
 }

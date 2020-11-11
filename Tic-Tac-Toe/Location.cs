@@ -2,13 +2,13 @@ namespace Tic_Tac_Toe
 {
     public class Location
     {
-        public int RowValueX { get; private set; }
-        public int ColumnValueY { get; private set; }
+        public int Row { get; }
+        public int Column { get; }
         
-        public Location(int rowValueX, int columnValueY)
+        public Location(int row, int column)
         {
-            RowValueX = rowValueX;
-            ColumnValueY = columnValueY;
+            Row = row;
+            Column = column;
         }
     }
 }

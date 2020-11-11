@@ -4,17 +4,17 @@ namespace Tic_Tac_Toe
 {
     public class ConsoleInputOutput: IInputOutput
     {
+        public string CollectPlayerInput(Player player)
+        {
+            var instruction = $"{player.Name} enter a coord x,y to place your {player.Piece} or enter 'q' to give up: ";
+            var input = Ask(instruction);
+            return input;
+        }
+        
         public string Ask(string question)
         {
             Console.WriteLine(question);
             return Console.ReadLine();
-        }
-        
-        public string CollectPlayerInput(Player player)
-        {
-            var instruction = $"{player.Name} enter a coord x,y to place your {player.CellValue} or enter 'q' to give up: ";
-            var input = Ask(instruction);
-            return input;
         }
         
         public void Output(string message)
@@ -36,11 +36,6 @@ namespace Tic_Tac_Toe
                 Console.WriteLine("");
             }
 
-        }
-
-        public void Output(Exception exception)
-        {
-            Console.WriteLine(exception);
         }
     }
 }

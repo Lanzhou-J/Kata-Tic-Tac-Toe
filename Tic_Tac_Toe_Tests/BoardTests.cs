@@ -101,8 +101,6 @@ namespace Tic_Tac_Toe_Tests
                 Assert.Equal(cellValues[index], cell.Value);
                 index++;
             }
-            
-            
         }
     }
 }
